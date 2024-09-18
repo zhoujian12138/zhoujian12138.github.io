@@ -33,7 +33,74 @@
         <hr>
     </div>
     <div class="post-content">
-        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文用以记录本人从0开始搭建自己的静态博客网站，使用Hexo博客框架搭建并部署到Github上，在不购买云服务的情况下构建自己的博客网站用以记录自己的学习内容。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>在安装Hexo之前，需要确保电脑中已经安装有与<a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js</a>与<a target="_blank" rel="noopener" href="https://git-scm.com/">Git</a>工具，由于博主电脑中已经安装了这两个工具，所以就不在此进行安装了，若需要安装的话上网搜索教程即可。环境配置完毕后进行检查工作来确保正确配置。</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1.png" class="" title="逐一输入版本检查命令来确保工具的成功安装">
+
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><p>在命令行中输入以下命令安装cnpm（因为用npm去安装Hexo容易报错）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry==https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>输入版本检查命令检查cnpm是否安装成功</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/2.jpg" class="" title="检查cnpm是否成功安装">
+
+<p>用cnpm安装hexo</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>输入版本检查命令出现版本信息说明hexo安装成功</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/3.jpg" class="" title="检查hexo是否成功安装">
+
+<h2 id="Github配置工作"><a href="#Github配置工作" class="headerlink" title="Github配置工作"></a>Github配置工作</h2><p>新建一个博客仓库，仓库名称设置为username.github.io（将来你的博客访问地址就是<a target="_blank" rel="noopener" href="https://username.github.io/">https://username.github.io</a> ，这里的username为你的用户名），每个github账户最多只能创建一个这样的域名访问网站！！</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/5.png" class="" title="注意仓库名称要是username.github.io">
+
+<p>配置SSH免密登录（用来解决本地和github服务器的连接问题，若已经配置完毕则跳过这一步骤），首先的话进入C:\User\你的用户名\ .ssh文件夹进行删除<strong>（Tips: Shift+Delete为彻底删除，不会占用回收站空间）</strong>，然后在C:\User\你的用户名 文件夹下右键打开Git Bash Here ，在git窗口输入命令生成.ssh秘钥</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/4.png" class="" title="打开Git Bash准备在文件夹中初始化hexo">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;你的github登录邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成了一个新的.ssh文件夹，然后将这个文件夹下的id_rsa.pub文件的内容以记事本打开后复制其内容，在github主页下的Setting中依次打开SSH and GPG Keys和New SSH key，把内容粘贴进行，title内容随便填写即可，公钥即添加成功。</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/6.png" class="" title="公钥成功添加">
+
+<p>在.ssh文件夹下打开git窗口后输入命令检查是否设置成功</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/7.jpg" class="" title="检查设置是否成功">
+
+<p>还需要进行github全局的用户名和邮箱的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的github username&quot;</span><br><span class="line">git config --global user.email &quot;你的github email&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建博客"><a href="#搭建博客" class="headerlink" title="搭建博客"></a>搭建博客</h2><p>创建一个博客文件夹，双击进入博客文件夹后鼠标右键选择Git Bash Here，在打开的git窗口进行博客项目初始化工作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>初始化完成后你会发现文件夹中出现了一些文件，其中source为博客的md文件夹（后续内容在这里编写），themes为博客的主题文件夹（下载主题文件在这里），_config.yml为博客的配置文件（修改博客的配置信息在这里）</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/8.png" class="" title="目录结构示意">
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g #执行该命令会在public文件夹下生成相关的html文件，这些文件将提交到github上</span><br><span class="line">hexo s #执行该命令可以开启本地浏览服务，打开浏览器http://localhost:4000即可看到博客内容</span><br></pre></td></tr></table></figure>
+
+<p>在博客文件夹下打开git窗口输入命令安装 hexo-deployer-git 插件，从名字不难看出该插件用于将我们的博客内容部署到github上去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>编辑博客文件夹下的_config.yml文件，在文件末尾配置部署信息(<strong>如果写为别的分支可能会出现本地更新与github显示无法同步的问题，为了避免麻烦这里我们就设置部署分支为main</strong>)</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/9.png" class="" title="检查设置是否成功">
+
+<p>在git窗口输入命令即可将本地blog推送到github远程仓库，推送完毕后即可通过username.github.io访问个人博客！！！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<h2 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h2><p>hexo官方提供了许多主题供用户使用，在 <a target="_blank" rel="noopener" href="https://hexo.io/themes/">HexoThemes</a> 中选择喜欢的主题访问其github主页复制http链接，在博客文件夹下的打开git窗口使用clone命令将主题克隆到本地，更改_config.yml配置即可使用。</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/10.png" class="" title="获取主题的http链接">
+
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/11.png" class="" title="克隆主题内容">
+
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/12.png" class="" title="在配置文件中配置主题">
+
+<p>对主题模版内容进行自定义修改需要进入主题文件夹下，对其配置文件进行相应的个人信息填写</p>
+<img src="/2024/09/18/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/13.png" class="" title="自定义模板内容">
+
+<p>然后在博客文件夹下输入一下命令，会在source文件夹下生成对应的帖子的.md文件，可以使用 <a target="_blank" rel="noopener" href="https://typoraio.cn/">Typora</a> 打开文件进行帖子的内容编写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;你文章帖子的title&quot;</span><br></pre></td></tr></table></figure>
+
+<p>编写完帖子后，依次输入以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean #删除旧的博客帖子</span><br><span class="line">hexo g #生成新的博客帖子的html文件</span><br><span class="line">hexo d #将博客推送到github上去</span><br></pre></td></tr></table></figure>
+
+<p>然后打开username.github.io即可看到博客内容更新！！</p>
+
     </div>
 
     
