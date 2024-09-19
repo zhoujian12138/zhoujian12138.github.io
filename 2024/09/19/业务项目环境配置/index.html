@@ -34,27 +34,27 @@
     </div>
     <div class="post-content">
         <h2 id="MySQL环境配置"><a href="#MySQL环境配置" class="headerlink" title="MySQL环境配置"></a>MySQL环境配置</h2><p>首先经检查博主本机的mysql环境为9.0.0，项目要求的mysql为8.0</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726748033093.png" alt="1726748033093"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726748033093.png" alt="1726748033093"></p>
 <p>首先把原有的mysql环境进行一个彻底的卸载😣😣😣，第一步是将mysql服务给关闭，在任务栏搜索框里搜索计算机管理，选中服务后找到mysql将其服务停止</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726749924246.png" alt="1726749924246"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726749924246.png" alt="1726749924246"></p>
 <p>停止服务后进行mysql软件的卸载，在任务栏搜索框搜索Mysql，任选一个和mysql相关的软件进行卸载，系统会自动跳转到卸载界面，事先声明博主的电脑是<strong>Windows11系统</strong>，所以有新系统下重装mysql的需求，希望本篇文章的内容能够帮到各位！🤝🤝🤝</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726750125828.png" alt="1726750125828"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726750566409.png" alt="1726750566409"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726750125828.png" alt="1726750125828"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726750566409.png" alt="1726750566409"></p>
 <p>在卸载过程中弹出MySQL Configurator的弹窗，弹窗的意思就是是否删除数据文件，这里博主选择彻底删除</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751009085.png" alt="1726751009085"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751009085.png" alt="1726751009085"></p>
 <p>如果没有弹出这个弹窗进行删除的话便需要手动删除C:\ProgramData\MySQL数据目录，需要注意的是ProgramData是隐藏文件，需要注意勾选显示隐藏项目</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751533056.png" alt="1726751533056"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751533056.png" alt="1726751533056"></p>
 <p>有的博主说要删除 C:\Documents and Settings\All Users\Application Data\MySQL文件夹，但由于博主没有这个文件夹，所以就跳过了，可以检查一下，如果有的话还是建议删掉，接下来的话准备把注册表给清空，windows+R打开regedit文件来打开注册表</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751690394.png" alt="1726751690394"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726751690394.png" alt="1726751690394"></p>
 <p>下面是mysql的目录注册表，一一检查一下确保每一个都要删除掉！！！</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Eventlog\Application\MySQL</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\Eventlog\Application\MySQL</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MySQL</span><br><span class="line"> </span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControl001\Services\MYSQL</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControl002\Services\MYSQL</span><br><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MYSQL</span><br></pre></td></tr></table></figure>
 
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726752181061.png" alt="1726752181061"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726752181061.png" alt="1726752181061"></p>
 <p>接下来重启电脑再次搜索检查C盘目录和注册表目录检查是否删除干净🤫🤫🤫，先不要直接去安装，检查无误后再进行重装MySQL系统，首先进入 <a target="_blank" rel="noopener" href="https://www.mysql.com/">MySQL官网</a> 进行安装，博主这里要安装的是8.0版本的MySQL</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753341093.png" alt="1726753341093"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753385487.png" alt="1726753385487"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753490721.png" alt="1726753490721"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753533500.png" alt="1726753533500"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753341093.png" alt="1726753341093"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753378460.png" alt="1726753378460"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753490721.png" alt="1726753490721"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726753533500.png" alt="1726753533500"></p>
 <p>双击打开安装包进行MySQL安装，一开始安装引导程序给了四个安装选项，分别为：</p>
 <ul>
 <li>如果你已经安装了第三方工具连接数据库管理，仅需要MySQL数据库服务器来运行数据库，则选择第一个</li>
@@ -62,27 +62,27 @@
 <li>如果需要MySQL服务器和客户端且希望获得完整的开发工具、文档等支持则建议选择第三个选项</li>
 <li>如果你对 MySQL 的不同组件有特定需求或者想节省空间，避免安装不必要的部分则可以选择最后的选项</li>
 </ul>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754245117.png" alt="1726754245117"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754245117.png" alt="1726754245117"></p>
 <p>这里博主本地下载好了Navicat软件，所以这里仅需要MySQL服务器故选择第一个选项</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754648054.png" alt="1726754648054"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754689826.png" alt="1726754689826"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754717637.png" alt="1726754717637"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754926440.png" alt="1726754926440"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755158915.png" alt="1726755158915"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755238011.png" alt="1726755238011"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755359601.png" alt="1726755359601"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754648054.png" alt="1726754648054"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754689826.png" alt="1726754689826"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754717637.png" alt="1726754717637"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726754926440.png" alt="1726754926440"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755158915.png" alt="1726755158915"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755238011.png" alt="1726755238011"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755359601.png" alt="1726755359601"></p>
 <p>这里密码博主设置为123456，因为后续有很多需要用到root密码的地方，所以这里博主进行了简单设置</p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755551771.png" alt="1726755551771"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755638454.png" alt="1726755638454"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755751781.png" alt="1726755751781"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755895748.png" alt="1726755895748"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755980806.png" alt="1726755980806"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756008647.png" alt="1726756008647"></p>
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756043187.png" alt="1726756043187"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755551771.png" alt="1726755551771"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755638454.png" alt="1726755638454"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755751781.png" alt="1726755751781"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755895748.png" alt="1726755895748"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726755980806.png" alt="1726755980806"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756008647.png" alt="1726756008647"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756043187.png" alt="1726756043187"></p>
 <p>完成上述步骤后我们需要进行验证工作以确保MySQL安装成功，Win+R输入cmd打开命令提示符</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd C:\Program Files\MySQL\MySQL Server 8.0\bin </span><br><span class="line">mysql -h localhost -u root -p #输入命令登录数据库</span><br><span class="line">*****  #输入登录密码</span><br><span class="line">status #查看数据库基本信息</span><br></pre></td></tr></table></figure>
 
-<p><img src="/../%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756440023.png" alt="1726756440023"></p>
+<p><img src="/../images/%E4%B8%9A%E5%8A%A1%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/1726756440023.png" alt="1726756440023"></p>
 <p>经过上述的步骤，MySQL就算重装完成啦！！！😄😄😄</p>
 
     </div>
