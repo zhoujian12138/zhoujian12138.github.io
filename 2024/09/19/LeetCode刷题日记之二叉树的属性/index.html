@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之二叉树的属性🧐🧐🧐
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本文为博主的LeetCode刷题日记，希望所记录的内容能够对大家有所启发，在撰写这部分内容的时候博主的《代码随想录》学习到了二叉树属性部分，在二轮学习的时候博主会将前序的知识点（数组、链表、栈与队列、字符串、哈希表）的内容重新整理，一起加油吧朋友们！💪💪💪</p>
+<h2 id="完全二叉树的节点个数"><a href="#完全二叉树的节点个数" class="headerlink" title="完全二叉树的节点个数"></a>完全二叉树的节点个数</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/description/">LeetCode题目链接</a> </p>
+<p>给一个完全二叉树的根节点root，求出该树的节点个数，完全二叉树实际上就是除了底层节点右部分没填满外，其他各层节点都为最大值。</p>
+<p>首先我们用递归法来解决这道问题，递归法三要素：</p>
+<ul>
+<li>确定递归函数的参数和返回值</li>
+<li>确定递归出口</li>
+<li>确定单层二叉树递归的逻辑</li>
+</ul>
+<p>首先递归函数参数的话便是树的根节点，返回值就是树的节点数量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getTreeNums</span><span class="params">(TreeNode root)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>递归的出口便是当root为空时返回0表示节点数为0</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在单层逻辑的处理上，先求左子树的节点数量，再求右子树的节点数量，最后加上根节点自己即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> getTreeNums(root.left) + getTreeNums(root.right) + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>所以递归的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*递归法求完全二叉树节点个数*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">countNodes</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getTreeNums(root);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getTreeNums</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">        <span class="keyword">return</span> getTreeNums(root.left) + getTreeNums(root.right) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>递归法掌握后迭代法同样也得掌握，用队列结合层序遍历策略即可求出完全二叉树的节点个数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*迭代法求完全二叉树节点个数*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">countNodes</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125; <span class="comment">//提前结束</span></span><br><span class="line">        Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        queue.offer(root);</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> queue.size();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">                <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> queue.poll();</span><br><span class="line">                result++;</span><br><span class="line">                <span class="keyword">if</span>(cur.left != <span class="literal">null</span>)&#123;queue.offer(cur.left);&#125;</span><br><span class="line">                <span class="keyword">if</span>(cur.right != <span class="literal">null</span>)&#123;queue.offer(cur.right);&#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了上述两种常规方法外针对于完全二叉树自身的属性特性来说，还有另外一种方法🤔🤔🤔，因为满二叉树的节点数与其深度depth存在关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodeNums = 2 * depth - 1</span><br></pre></td></tr></table></figure>
+
+<p>然后完全二叉树的左子树和右子树本质上就是满二叉树，所以我们可以通过计算左右子树的深度来计算整个完全二叉树的节点数💡💡💡</p>
+<ul>
+<li><p>递归的入参为树的根节点，返回值为完全二叉树的节点数</p>
+</li>
+<li><p>递归的出口为如果root为null则返回0，若不为null则根据左右子树的深度来判断该子树是不是满二叉树</p>
+</li>
+<li><p>递归的单层逻辑仍为左右子树的节点数总和加一</p>
+</li>
+</ul>
+<p>也就是说该迭代法与常规迭代法不同之处仅在于求节点数的方法不同🤔🤔🤔</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">countNodes</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getTreeNums(root);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getTreeNums</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">        <span class="comment">//根据左右子树的深度来判断是否是满二叉树</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> root.left;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> root.right;</span><br><span class="line">        <span class="type">int</span> <span class="variable">leftDepth</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">rightDepth</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(left != <span class="literal">null</span>)&#123;left = left.left; leftDepth++;&#125;</span><br><span class="line">        <span class="keyword">while</span>(right != <span class="literal">null</span>)&#123;right = right.right; rightDepth++;&#125;</span><br><span class="line">        <span class="keyword">if</span>(leftDepth == rightDepth)&#123;<span class="keyword">return</span> (<span class="number">2</span> &lt;&lt; leftDepth) - <span class="number">1</span>;&#125; <span class="comment">//子树是满二叉树，直接返回其节点数</span></span><br><span class="line">        <span class="keyword">return</span> getTreeNums(root.left) + getTreeNums(root.right) + <span class="number">1</span>; <span class="comment">//如果子树不是满二叉树则继续递归</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过这三个方法，这道求完全二叉树的节点数的题目我们就彻底掌握了，若后续有遗忘再回来复习一下即可🐭🐭🐭</p>
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">LeetCode题目链接</a> </p>
+<p>给定一个二叉树来判断其是否是平衡二叉树，而平衡二叉树就是左右子树的高度差的绝对值不超过1</p>
+<p>这里我们要强调一个概念就是二叉树的深度和高度的概念🤔🤔🤔</p>
+<ul>
+<li>二叉树节点的深度是指从根节点到该节点的路径边上的节点个数</li>
+<li>二叉树节点的高度是指该节点到叶子节点的最长路径边的条数</li>
+</ul>
+<p>简单来说就是往下是深度增加，往上是高度增加，深度和高度都是从1开始😮😮😮</p>
+<p>我们来分析该题的递归三要素：</p>
+<ul>
+<li>递归的入参为节点，返回值为该节点的高度但如果当前节点为根节点的二叉树不是平衡二叉树的话返回高度无意义，故若递归时判断出不为平衡二叉树则返回-1</li>
+<li>递归的出口为遇到空节点则返回0，表示当前节点为根节点的树的高度为0</li>
+<li>单层递归的逻辑即是分别求出左右子树的高度，然后差值小于1则返回当前二叉树高度否则返回-1</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**递归法*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isBalanced</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getHeight(root) == -<span class="number">1</span> ? <span class="literal">false</span> : <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getHeight</span><span class="params">(TreeNode root)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">leftHeight</span> <span class="operator">=</span> getHeight(root.left);</span><br><span class="line">        <span class="keyword">if</span>(leftHeight == -<span class="number">1</span>) &#123;<span class="keyword">return</span> -<span class="number">1</span>;&#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">rightHeight</span> <span class="operator">=</span> getHeight(root.right);</span><br><span class="line">        <span class="keyword">if</span>(rightHeight == -<span class="number">1</span>) &#123;<span class="keyword">return</span> -<span class="number">1</span>;&#125;</span><br><span class="line">        <span class="keyword">if</span>(Math.abs(leftHeight - rightHeight) &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.max(leftHeight, rightHeight) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>掌握递归解法后我们来进一步掌握迭代解法🫡🫡🫡</p>
+<p>求深度从上往下可以通过层序遍历来计算，但是高度是一个从下往上的定义值所以无法通过层序遍历来求高度🤔🤔🤔</p>
+<p>所以我们可以通过借助栈的后序遍历来找每个节点的高度，因为是借助栈所以这里实际上还是通过求根节点的最大深度来求的高度😮😮😮，这里迭代法的效率比较低，博主就先不码了，后面有时间会补上🫡🫡🫡</p>
+<h2 id="二叉树的所有路径"><a href="#二叉树的所有路径" class="headerlink" title="二叉树的所有路径"></a>二叉树的所有路径</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-paths/description/">LeetCode题目链接</a> </p>
+<p>给定一个二叉树，返回所有从根节点到叶子节点的路径</p>
+<p>因为要从根节点到叶子节点的路径所以需要前序遍历（中左右），而且该题需要把路径记录下来进行回溯，通过回溯来从一个路径回退再进入另一个路径🤔🤔🤔，ok，我们来梳理递归三要素吧</p>
+<ul>
+<li>递归的入参和返回值：传入根节点，一个存放每一条路径的path和一个存放结果的result，因此不需要返回值。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root, List&lt;Integer&gt; paths, List&lt;String&gt; result)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>递归的出口：这里递归遇到叶子节点为终止，本题如果像一贯的if(cur &#x3D;&#x3D; null){出口}这样的写法的话会导致本体的处理很麻烦，因为找到叶子节点就开始结束的处理逻辑（把路径放入result中）🤔🤔🤔</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(cur.left == <span class="literal">null</span> &amp;&amp; cur.right == <span class="literal">null</span>)&#123;</span><br><span class="line">	<span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paths.size() - <span class="number">1</span>; i++)&#123;</span><br><span class="line">		sb.append(paths.get(i).append(<span class="string">&quot;-&gt;&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	sb.append(paths.get(paths.size() - <span class="number">1</span>));</span><br><span class="line">	result.add(sb.toString());</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层的递归处理逻辑为先处理中间节点，将中间节点放进path中，然后判断中间节点是否是叶子节点，若不为空则递归处理左子节点和右子节点，当递归到叶子节点将path处理放到result中后要进行回溯处理，进行节点删除，那要怎么写呢？🤔🤔🤔其中有一点需要知道的是回溯和递归是一一对应的，回溯和递归要永远在一起，因为递归到叶子节点后进行回溯对吧😮😮😮</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(root.left != <span class="literal">null</span>)&#123;</span><br><span class="line">	traversal(roor.left, paths, result)</span><br><span class="line">	paths.remove(paths.size() - <span class="number">1</span>); <span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(root.right != <span class="literal">null</span>)&#123;</span><br><span class="line">	traversal(roor.right, paths, result)</span><br><span class="line">	paths.remove(paths.size() - <span class="number">1</span>); <span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>梳理完毕后我们来码递归的解决方法吧🫵🫵🫵</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**递归法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">binaryTreePaths</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; paths = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> result;&#125; <span class="comment">//提前终止</span></span><br><span class="line">        traversal(root, paths, result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root, List&lt;Integer&gt; paths, List&lt;String&gt; result)</span>&#123;</span><br><span class="line">        paths.add(root.val); </span><br><span class="line">        <span class="keyword">if</span>(root.right == <span class="literal">null</span> &amp;&amp; root.left == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; paths.size() - <span class="number">1</span>; i++)&#123;</span><br><span class="line">                sb.append(paths.get(i)).append(<span class="string">&quot;-&gt;&quot;</span>); <span class="comment">//StringBuilder类型可以直接append整数</span></span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(paths.get(paths.size() - <span class="number">1</span>)); <span class="comment">//最后不用添加&quot;-&gt;&quot;单独处理</span></span><br><span class="line">            result.add(sb.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//回溯递归同时进行</span></span><br><span class="line">        <span class="keyword">if</span>(root.left != <span class="literal">null</span>)&#123;</span><br><span class="line">            traversal(root.left, paths, result);</span><br><span class="line">            paths.remove(paths.size() - <span class="number">1</span>); <span class="comment">//列表移除元素为remove</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(root.right != <span class="literal">null</span>)&#123;</span><br><span class="line">            traversal(root.right, paths, result);</span><br><span class="line">            paths.remove(paths.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>处理完了递归的解法，当然就是要继续接着处理迭代的解法啦，迭代的话依赖使用前序遍历的迭代方式来处理，用一个栈来模拟递归，用另一个栈来存放对应的遍历路径💡💡💡</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**迭代法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">binaryTreePaths</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;<span class="keyword">return</span> result;&#125; <span class="comment">//提前终止</span></span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;(); </span><br><span class="line">        Stack&lt;String&gt; paths = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">        stack.push(root);</span><br><span class="line">        paths.push(String.valueOf(root.val));</span><br><span class="line">        <span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> paths.pop();</span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> stack.pop();</span><br><span class="line">            <span class="comment">//如果迭代到叶子节点</span></span><br><span class="line">            <span class="keyword">if</span>(cur.left == <span class="literal">null</span> &amp;&amp; cur.right == <span class="literal">null</span>)&#123;</span><br><span class="line">                result.add(path);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(cur.left != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(cur.left);</span><br><span class="line">                paths.push(path + <span class="string">&quot;-&gt;&quot;</span> + cur.left.val);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(cur.right != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(cur.right);</span><br><span class="line">                paths.push(path + <span class="string">&quot;-&gt;&quot;</span> + cur.right.val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>今天的LeetCode学习就到这里啦！！！改天见💤💤💤</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            教师逻辑生成🤔🤔🤔
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="教学机器人对话逻辑问题"><a href="#教学机器人对话逻辑问题" class="headerlink" title="教学机器人对话逻辑问题"></a>教学机器人对话逻辑问题</h2><p>1.学生和机器人交流的内容如果说过于脱离教学内容怎么办？</p>
+<ul>
+<li>需要一定的人为对话逻辑控制</li>
+</ul>
+<p>2.怎么去判断机器人什么时候调用知识库API获取知识库的内容？</p>
+<ul>
+<li>需要一定的API调用逻辑设置</li>
+</ul>
+<p>3.机器人怎么以老师的口吻和用户进行对话交流呢？</p>
+<ul>
+<li>语言模型训练？🤔还是对话逻辑设置？🤔</li>
+</ul>
+<p>4.用教学视频去训练模型就能够保证模型教师口吻的交流逻辑吗？</p>
+<ul>
+<li>模型概率输出不可能做到保证🤔</li>
+</ul>
+<p>5.如果说设置机器人的教师对话逻辑是否工作量过于复杂与庞大呢？</p>
+<ul>
+<li>完全的教学对话逻辑设置不现实🤔</li>
+</ul>
+<p>6.Rasa只是一个对话框架吗？它包含语言模型吗？</p>
+<ul>
+<li>Rasa本质上是一个对话框架专注于对话管理和自然语言理解 😮💡</li>
+</ul>
+<h2 id="方向思考"><a href="#方向思考" class="headerlink" title="方向思考"></a>方向思考</h2><p>Rasa是一个流行的开源对话管理框架， 可以帮助我们设计和管理复杂的对话逻辑。它使用一种基于故事（Stories）和规则（Rules）的机制，允许你定义机器人如何响应不同的用户输入。你还可以通过自定义的Action（动作）来调用API或执行其他任务。 （<strong>我们可以设置一个可扩展的Action动作库来调用API</strong>🤔）</p>
+<p>Rasa 内置了一个 NLU(nature language understand)组件，用于意图识别和实体抽取。Rasa的NLU模块可以使用训练数据来识别用户输入的意图，并抽取其中的实体，例如日期、地点、数值等。 （<strong>我们的Action是否执行根据意图实体来进行判断</strong>🤔）</p>
+<p>7.基于上述内容引申出问题：Rasa框架如果不集成语言模型也不设置Action能够进行对话吗？</p>
+<ul>
+<li>严格意义上来说不行，因为Rasa是基于训练数据中定义的意图和预定义响应来进行简单的对话，这种对话是有限的，只能处理固定场景的简单交互🤔，所以要实现基本的对话功能还是可以结合外部语言模型🤔</li>
+</ul>
+<h2 id="方案设计"><a href="#方案设计" class="headerlink" title="方案设计"></a>方案设计</h2><p>在Rasa框架下引入一个不大的语言模型，对话逻辑的设置采取意图判断动作调用，执行动作（调用图数据库查询语言接口），返回的图节点内容（知识点或者是例题或者是解析）再经过语言模型处理后输出人性化的回答语言，API调用时同时更新知识库中的节点属性来动态计算学生的学习情况，而当识别的意图不正确时则不进行动作执行，而是直接经过语言模型处理后输出人性化的回答语言。或者执行动作（除了用户输入外结合纠正对话内容的提示输入语言模型来输出引导用户继续学习）😮💡</p>
+<p><img src="/Draft_images/draft1/2.jpg" alt="教学逻辑方案设计"></p>
+<h2 id="框架搭建"><a href="#框架搭建" class="headerlink" title="框架搭建"></a>框架搭建</h2><p>通过实际搭建Rasa项目并进行对话测试来验证方案的实际效果🤔🤔🤔</p>
+<p>首先创建一个Rasa的开发环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create -n Rasa python=3.8 #创建conda环境</span><br><span class="line">conda activate Rasa #激活环境</span><br><span class="line">pip install rasa #安装Rasa</span><br></pre></td></tr></table></figure>
+
+<p>安装完毕后验证Rasa是否成功安装</p>
+<p><img src="/Draft_images/draft1/3.jpg" alt="rasa版本验证"></p>
+<p>确认安装成功后在指定目录创建我们的rasa项目</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd 目标目录路径</span><br><span class="line">rasa init</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Draft_images/draft1/4.png" alt="rasa项目创建成功示意"></p>
+<h2 id="框架学习"><a href="#框架学习" class="headerlink" title="框架学习"></a>框架学习</h2><p>Rasa的对话模型是通过训练数据（意图、实体和对话故事）来训练生成的，Rasa使用这个模型来识别用户的输入意图并根据定义的对话逻辑进行响应🤔🤔🤔</p>
+<p>nul文件中定义不同的意图（intents）和训练示例。</p>
+<p><img src="/Draft_images/draft1/5.png" alt="自然语言理解NLU的文件结构示意"></p>
+<p>基于nul文件的作用引申出对于我们教学机器人以下问题的思考：</p>
+<p>8.对于我们的教师机器人不可能定义所有意图和意图的所有训练示例的情况下，要能很好的解析学生的意图该怎么办？🤔</p>
+<ul>
+<li>基础模型辅助Rasa的意图识别：我们可以通过Rasa处理我们定义好的学生的学习意图，当Rasa无法识别或不确定意图时借助基础语言模型进一步解析意图😮💡</li>
+<li>可以将意图进行聚类和泛化：我们可以将相似意图合并成一个更广泛的意图，减少对每个具体意图的过度定义需求并通过上下文信息或者提问在对话中细化用户意图😮💡</li>
+</ul>
+<p>9.肯定会存在未定义的意图的对话情况，这种情况下Rasa会怎么处理呢？🤔</p>
+<ul>
+<li>Fallback策略：当遇到无法识别的意图时机器人执行预设的逻辑，可以请求学生重新表达或者返回预定义的模糊响应，这里我们设计为借助基础语言模型进行处理😮💡</li>
+</ul>
+<p>10.未识别的意图交给集成的小语言模型处理这可行吗？🤔</p>
+<ul>
+<li>这是可行的，我们通过设计的混合系统可以让 Rasa 负责意图识别和对话管理，而当遇到未识别意图时，系统自动调用小型语言模型或其他预训练模型，生成更智能的响应。😮💡</li>
+</ul>
+<p>11.教学机器人能否将未识别的意图的对话（理解为教学脱离的对话）慢慢引导回预期的教学对话？🤔</p>
+<ul>
+<li>引导策略： 机器人可以尝试将未识别的意图引导回教学话题。例如，当学生输入一些不相关的问题时，机器人可以通过回答模糊的内容，提供一些帮助提示，并询问是否愿意继续讨论当前教学内容😮💡</li>
+<li>上下文管理： 如果检测到学生的对话脱离了教学主题，机器人可以通过上下文引导策略，将对话重新引回预期路径。例如：“这很有趣，但我们还是来继续讨论你刚才提到的数学问题吧。” 😮💡</li>
+<li>基于规则的引导：我们可以预设规则，比如说当对话偏离教学主题时，系统主动提供相关的教学内容或问题选项，鼓励学生重新回到与教学相关的对话。例如，“我们现在讨论的是微积分，你还想了解这方面的更多内容吗？” 😮💡</li>
+</ul>
+<p>Domain文件中定义响应和意图之间的对应关系，还可以定义API调用的自定义动作。</p>
+<p><img src="/Draft_images/draft1/6.png" alt="Domain文件结构示意图"></p>
+<p>基于上述问题，这里的响应部分我们只需设置我们预定义好的意图的响应动作，通过识别不同意图（问知识点还是知识点不懂还是要出题或者讲解题目）来调用对应的API接口来查询知识库，将返回的文本经基础语言模型处理后返回给学生用户 😄💪 </p>
+<p>Stories文件中定义对话流程，告诉Rasa如何在不同意图间切换并作出反应。</p>
+<p><img src="/Draft_images/draft1/7.png" alt="Stories文件结构示意图"></p>
+<p>基于上述设计，这部分的对话路径设计可以分为情绪对话路径、教学对话路径、无法识别教学意图下的对话路径（可扩充），教学对话路径可进一步细化知识点讲解路径、例题解析路径，通过可扩展可调试的对话路径设置可以使得我们的机器人愈加具备专业教学机器人潜质💪 💪 💪 </p>
+<h2 id="方案路线尝试"><a href="#方案路线尝试" class="headerlink" title="方案路线尝试"></a>方案路线尝试</h2><p>下一步设计 🤩🤩🤩</p>
+<h2 id="端口环境限制"><a href="#端口环境限制" class="headerlink" title="端口环境限制"></a>端口环境限制</h2><p>补充考虑 😵‍💫😵‍💫😵‍💫 </p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
