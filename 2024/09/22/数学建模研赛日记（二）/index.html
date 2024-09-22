@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            数学建模研赛日记（二）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 本文为博主数学建模比赛第二天的内容记录，希望所写的一些内容能够对大家有所帮助，不足之处欢迎大家批评指正🤝🤝🤝 </p>
+<h2 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h2><p>今天是第二天，博主结合本队伍的选题给大家做一个经验分享同时也是督促自己每天要有一定的产出，实不相瞒，博主今天的进度已经是C题的问题四了，目标明天把问题四和五给解决，后面的话留一天时间来熬夜改论文，论文已经由我另一个队友在加班加点的写了，目标写完就算成功！开玩笑，还是尽可能去改好吧，毕竟最后交上去的东西还是论文，话不多说，我们进入正题！✊✊✊</p>
+<h2 id="问题二分析"><a href="#问题二分析" class="headerlink" title="问题二分析"></a>问题二分析</h2><p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/1727017283856.png" alt="1727017283856"></p>
+<p>对于问题二的问题阐述我们可以抽离出几个关键点进行分析</p>
+<p>1.问题中提到斯坦麦茨方程主要是针对正弦波形设计，这点在数据处理的时候就要留意，处理的数据小心混淆了其他波形的数据🤔🤔🤔</p>
+<p>2.问题中提到的对于不同种类的磁芯材料及工作温度的变化，SE方程会造成较大的误差，这里的话就启发我们可以先阐述斯坦麦茨方程的公式原理，然后提出它对于磁芯材料和温度变化的考虑不足，然后辅以不同材料类型下SE方程的磁芯损耗的预测值与真实值的误差曲线以及不同温度下SE方程的磁芯损耗的误差曲线，这个问题就能够在论文中很好的去说明了🤔🤔🤔，也就是说先摆出问题，SE方程存在不足。</p>
+<p>3.问题中点出了现有的对SE方程的修正工作，如下图所示。那这里实际上就是说启示我们在问题分析内容撰写的时候最好要能够点出我们的方程修正工作是有受到目前工作的启发，或者说在现有工作的基础上进行的温度修正，通过这样的表述能够让人比较清楚的了解我们为什么要去这样修正SE方程。🤔🤔🤔另外就是可以理论总结下目前工作是做了什么，也就是下面两个修正方程的思想，然后准备过渡到我们的温度修正项的设计。当然博主说的不一定对，只是比较个人主观的想法🫡🫡🫡</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/1727017716334.png" alt="1727017716334"></p>
+<p>4.问题中提到说要分析SE方程，就是说我们从现有工作的修正工作引入的时候还可以顺势对比下SE方程的不足，当然应该是在准备写温度修正的内容前点出SE方程的不足，但实际上我们一开始以及阐述了SE方程的不足了，这里感觉可以点一下相关内容即可🤔🤔🤔</p>
+<p>5.问题中提到了对于同一种材料和波形的条件下，不同的温度变化会使得磁芯损耗预测效果存在差异性，因为训练集是有四种材料的数据，三种波形的数据以及四种不同温度的情况，这里的话博主自己的做法是进行了一个全方面的差异性展示，就是把各个材料下和不同波形下不同温度对应的斯坦麦茨方程的预测值的误差曲线给绘制了一下，工作量有点大😵‍💫😵‍💫😵‍💫</p>
+<p>6.问题中最后部分就是说我们根据温度这一问题所进行修正设计的方程的预测值与实际值的误差曲线与斯坦麦茨方程相比的效果要好，展示效果时要注意在正弦波的情况下对比，因为SE方程是针对正弦波进行设计的，然后的话就是因为问题中是提到材料类型和温度对磁芯损耗的影响，但是我们是只进行了温度修正，所以在效果对比时也要展现出在各个材料类型的比较下我们的方程的误差曲线的效果都要优于斯坦麦茨方程🤔🤔🤔</p>
+<h2 id="问题三分析"><a href="#问题三分析" class="headerlink" title="问题三分析"></a>问题三分析</h2><p>梳理完问题二，博主继续来对问题三进行一个分析，希望分析的东西能够给大家带来一些启发和帮助🤝🤝🤝</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/1727018623019.png" alt="1727018623019"></p>
+<p>相较于问题二，博主认为问题三的问题抛得还是很清楚的，对于问题三的问题阐述我们同样可以抽离出几个关键点进行分析</p>
+<p>1.问题三提到说实际上影响磁芯损耗的因素有很多，但是温度、励磁波形和材料是三个最重要的因素，也就是说我们对于问题三的处理主要就是这三种因素的影响了，因为训练集这几个因素都有，当然材料的话可能需要编码处理一下，因为训练集中的四种材料是4张Sheet子表的内容，倒也问题不大🤔🤔🤔</p>
+<p>2.问题三中明显的点出了三者对于磁芯损耗的独立和协同作用，那实际上逻辑很清楚了，问题给出了影响因素，我们所需要做的就是对训练集数据进行三大因素提取，然后绘制图表来展示三个因素的独立作用对磁芯损耗的影响，协同作用的影响这种，实际上博主认为问题三的难度还是不高的，主要工作量在处理数据和绘图上，最后的话要给出一个最优的条件，博主是用了网格搜索的方法，但好像我的同门说不用这样处理，就直接说出大概的条件，像高温、材料几然后波形几这种最优条件就行🤔🤔🤔，大家也见仁见智叭，博主也是第一次打数模，本科太摆了没打过数模，所以大家仅作参考帖子就行🤡🤡🤡</p>
+<h2 id="经验分享"><a href="#经验分享" class="headerlink" title="经验分享"></a>经验分享</h2><ul>
+<li>博主第一天用spasspro网页进行画图，因为当时会觉得python去画图要进行调格式，否则图表生成太难看了，然后的话我同门用python画直接发的，图表蛮好看的，询问之后得知是用python的seaborn库，这里和大家分享一下，数模这种赶时间的比赛，尽可能的把效率给提起来，另外的话图表的生成时标题和xy轴的标签的字体可以设大点，毕竟论文最忌讳图表看不清楚了🤕🤕🤕</li>
+<li>另外的话就是还是在一个问题的内容开始撰写的时候建议用总分的结构，配上一个你处理问题的流程图，这样可以让评审能够很容易的看清楚你每部分是怎么做的，因为很多同学可能思维上写论文的经验不多，上来就直接写自己怎么怎么做的，做了哪些，这也是不大推荐的😕😕😕</li>
+<li>另外的话就是绘图的代码建议都保留，然后对于每个问题的绘图代码就有框架的排列好，不排除明后两天有时间的话对图表进行更改，博主还是建议大家在处理问题的时候有逻辑的进行一些存档的工作，以防止下次可以快速的找到🤖🤖🤖</li>
+<li>最后就是博主的一个队友今天还是被老师抓去改本子了，强烈建议大家在参加数学建模比赛前对于队友的时间安排要详细调研一下，防止出现博主这种一个人编程加绘图加搭框架，要燃烧殆尽了🥴🥴🥴</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>明天继续燃烧！！！😣😣😣</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

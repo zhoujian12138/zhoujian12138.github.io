@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            数学建模研赛日记（一）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文为博主数学建模比赛第一天的内容记录，希望所写的一些内容能够对大家有所帮助，不足之处欢迎大家批评指正🤝🤝🤝</p>
+<h2 id="选题"><a href="#选题" class="headerlink" title="选题"></a>选题</h2><p>首先第一天的首要工作就是对各个题进行一个大致的摸底，根据队伍水平和知识储备进行一个题目的选择，往年的AB题都是华为题，难度比较大，相对来说E题难度会小很多，但是因为各个题的获奖比例是一定的，所以大家根据各自队伍的想法来自行选择不同难度的选题，毕竟难度大的选题其选择该题的队伍实力也不容小觑，难度小的选题其人数又会更多，竞争也相应不小。这部分内容就说这么多，博主等待出题中ing😣😣😣</p>
+<p>时间到！首先我们登录 <a target="_blank" rel="noopener" href="https://cpipc.acge.org.cn/#">中国研究生创新实践系列大赛管理平台 </a> 然后选择中国研究生数学建模竞赛</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726877326083.png" alt="1726877326083"></p>
+<p>报名队长进行登录，登录后进入右上角个人中心进行选题下载</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726877391740.png" alt="1726877391740"></p>
+<p>我们将操作说明、MD5校验工具以及试题一一下载完毕，其中试题包括分文件的赛题下载和完整的赛题文件下载（<strong>Tips:赛题下载是通过百度网盘，没有会员下载的话不推荐，可以尝试其他方式</strong>😅😅😅）</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726877434134.png" alt="1726877434134"></p>
+<p>等待队友下载赛题中😵😵😵</p>
+<h2 id="赛题浏览"><a href="#赛题浏览" class="headerlink" title="赛题浏览"></a>赛题浏览</h2><p>赛题已经拿到了，现在准备先把各个赛题的内容给过一下</p>
+<p>首先是A题， A题的背景涉及风力发电机的疲劳损伤与功率分配问题，核心目的是通过建立数学模型来优化风机的运行，减少机械疲劳损伤，提高风机的可用寿命和发电效率🤔🤔🤔。</p>
+<ul>
+<li>子问题阐述： 针对主轴扭矩和塔架推力这两类载荷的累积疲劳损伤进行量化，且要求模型能够在线实时计算，不能使用复杂的机器学习方法； 基于风速和风机功率的关系，建立模型估算风机塔架推力和主轴扭矩 ； 建立优化模型，实时分配风机有功功率，减少所有风机的累积疲劳损伤，同时满足功率约束和调度指令要求； 在问题3的基础上，进一步考虑实际工程中的通信延迟和测量噪声，完善优化模型🤔🤔🤔。</li>
+</ul>
+<p>然后是B题， B题围绕WLAN网络吞吐量建模展开，核心任务是通过分析WLAN网络的结构和运行机制，基于实测数据预测系统的吞吐量。题目涉及网络拓扑、信道接入机制、节点间的RSSI、干扰等多种因素，要求从中提取关键特征并进行建模，以实现对吞吐量的准确预测 🤔🤔🤔，也是一眼华为题🥴🥴🥴。</p>
+<p>首先是C题，是一个磁性元件的磁芯损耗建模问题。赛题的核心是如何建立 磁性元件磁芯损耗的模型 ，需要考虑多个因素： 频率、磁通密度、励磁波形、温度、磁芯材料等 🤔🤔🤔。</p>
+<ul>
+<li>现有模型：现有是磁芯损耗模型主要分为损耗分离模型和经验计算模型，现在的问题是模型精度不够，难以适应各种工况，目标是希望基于数据驱动的方式建立一个高精度且广泛适用的模型能够处理不同的工作条件🤔🤔🤔。</li>
+<li>问题描述： 需要建立一个能够根据实验数据准确预测磁芯损耗的数学模型，并且能够对不同的工况进行泛化预测。模型应基于已知工况下的温度、频率、磁通密度等变量，通过学习这些因素之间的复杂关系来预测新的工况下的磁芯损耗🤔🤔🤔。 </li>
+<li>数据说明：训练集附件一的4个数据表分别表示4种不同的磁芯材料的数据，变量包括温度、频率、磁芯损耗、励磁波形类型、磁通密度（1024个采样点）。附件二与附件三的测试集和训练集结构相同，区别在于一个有磁芯损耗一个没有🤔🤔🤔。</li>
+<li>子问题阐述： 赛题共给出了五个具体的问题，每个问题都涉及磁芯损耗的不同方面，包括对励磁波形进行分类、对斯坦麦茨方程进行修正、对磁芯损耗因素进行分析、构建一个数据驱动的磁芯损耗预测模型以及建立优化模型来同时实现最小磁芯损耗和最大传输磁能的工况 🤔🤔🤔。</li>
+</ul>
+<p>接下来再看看D题吧，D题是 聚焦于大数据驱动下的地理综合问题，探讨了自然地理和人文地理的多要素综合问题。题目围绕对地观测数据的使用、地理环境的时空演化、极端天气与灾害预测等方面，要求通过数学建模、数据分析和预测，解决多个具体问题 🤔🤔🤔。个人感觉相较于C题，D题的专业性要求会低一些。</p>
+<ul>
+<li>子问题阐述： 分别对降水量和土地利用&#x2F;土地覆被类型两个变量进行描述性统计；建立模型说明地形与气候如何共同作用，影响极端天气（如暴雨）的形成 ； 分析降雨、地形和土地利用三者的交互作用，确定暴雨成灾的临界条件；结合历史演化特征，预测2025-2035年中国境内最脆弱的地区，并以地图形式展示 ； 建立数学模型对中国土地利用变化进行简化和综合，描述其特征与结构 🤔🤔🤔。</li>
+</ul>
+<p>接下来再看看E题，E题往往都是选择人数最多的赛题，感觉冲E题也要谨慎， 其中E题围绕高速公路应急车道的紧急启用模型展开，主要解决的是如何通过交通监控数据进行拥堵预测，并提供是否启用应急车道的决策支持。题目要求通过建立数学模型，利用视频监控数据预测交通拥堵，并设计决策规则判断是否启用应急车道，从而最大限度缓解拥堵问题🤔🤔🤔。</p>
+<ul>
+<li>子问题阐述： 统计四个观测点的交通流参数随时间的变化规律，建立交通流拥堵模型，实现实时预警， 利用视频数据验证模型的有效性； 构建合理的应急车道启用模型，为决策者提供启用应急车道的理论依据 ； 设计实时决策规则，判断是否启用应急车道； 重新设计第三点到第四点之间的监控点布局，提升应急车道启用决策的科学性，并控制成本🤔🤔🤔。</li>
+</ul>
+<p>今年的F题一看就格调拉满了🥶🥶🥶， 主要是围绕X射线脉冲星光子到达时间建模展开，涉及天体物理学、相对论效应、时间测量及X射线脉冲星信号的精确预报。主要目的是通过建模和仿真，研究脉冲星光子到达时间的特性，并为脉冲星导航试验任务提供支持🤔🤔🤔。 F题就不细看了，哈哈，看着格调太高了博主果断率领队伍放弃🤪🤪🤪</p>
+<h2 id="制定方案"><a href="#制定方案" class="headerlink" title="制定方案"></a>制定方案</h2><p>博主和队伍第一时间选择了C题进行方案设计，今天第一天目标把第一子问题解决。这里博主分析一下解决思路和方案。</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726933464250.png" alt="1726933464250"></p>
+<p>针对于这部分实际上思路为不同数据的分布特征（例如最大、最小、方差、均值等）和波形的形状特征（例如波峰波谷、频谱等）进行一个表格和图的展示，这里博主推荐一个快速生成图表的网页 <a target="_blank" rel="noopener" href="https://www.spsspro.com/">SPSSPRO-免费专业的在线数据分析平台</a> </p>
+<p>通过excel文件能够快速生成不同类型的图表，还是能节省很多时间的，毕竟图表不能太难看了，自己去脚本生成也很费时间。</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726933665229.png" alt="1726933665229"></p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726933676714.png" alt="1726933676714"></p>
+<p>处理完这一部分逻辑后，紧接着我们可以进行相关性分析和PCA降维，可以阐述为什么你要这样处理，因为提取了多种的分布特征和形状特征，特征间存在的互相关联的关系，对于分类的权重也不同，通过特征工程的工作进一步处理了核心特征。</p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%97%A5%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/1726933868099.png" alt="1726933868099"></p>
+<p>这里的话博主的做法是对比很多种分类算法，然后的话从结果去倒推你为什么要利用这个算法去建立你的分类模型，从原理和实际运行效果两方面去佐证你的算法的有效性和合理性，这里可能需要对比各个算法的效果。</p>
+<p>C题的思路分享就到这儿了，最后说一下就是在写处理问题的时候记得先放一个整体的流程图昂，先总后分的写法不会吃亏滴！</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
