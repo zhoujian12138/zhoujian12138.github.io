@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            数学建模研赛总结（一）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文为博主数学建模比赛第五天的内容记录，希望所写的一些内容能够对大家有所帮助，不足之处欢迎大家批评指正🤝🤝🤝 </p>
+<h2 id="进度"><a href="#进度" class="headerlink" title="进度"></a>进度</h2><p>今天已经是最后一天了，博主今天和两个队友熬了个大夜总算把论文给整了个七七八八然后提交了，因为实在熬不动了，前面两天没有更新博客分享比赛内容因为实在没有时间，每天从早上8点弄到晚上12点，连写博客的时间都没有，今天睡了一个上午和下午，准备把剩下的一点内容把总结记录一下，希望大家也顺利提交论文后面有个好结果，话不多说，我们进入正题！ ✊✊✊</p>
+<h2 id="问题四分析"><a href="#问题四分析" class="headerlink" title="问题四分析"></a>问题四分析</h2><p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727278414701.png" alt="1727278414701"></p>
+<p>对于问题四的问题阐述我们可以抽离出几个关键点进行分析</p>
+<p>1.问题中提到的众多传统模型说明在问题四的模型预测时需要去对比传统模型来展示我们模型的优势，这点算是比较基本的问题，无论是编程还是论文写作，模型对比是比较基本的环节🤔🤔🤔</p>
+<p>2.这里提出跨越不同材料类型说明我们的模型要把材料类型这一数据特征作为模型的变量，这里的话由于C题所给的训练集数据的材料数据是不同的Sheet表，所以这里处理的时候要注意把各个sheet表的数据给整合并打上材料类型的编码特征🤔🤔🤔</p>
+<p>3.这里的工况条件没有很细致的讲出是什么特征，所以这里可能就是说我们要进行数据分析，考虑哪些工况特征作为模型的输入特征或者计算变量，对应论文中可以进一步补充问题四的特征分析部分，考虑各个工况特征对磁芯损耗的一个权重，进行特征组合优化，当然这只是博主的思路，仅供大家参考👻👻👻</p>
+<p>4.这里的话的数据分析技术和建模技术的话其实提示我们论文的这一部分可以这样去组织内容，一块儿就是数据分析（上述提到的因为工况条件没有规定的很死，所以这里可以分析一部分内容），另外的话就是建模技术，如果是用的现有的模型也建议把模型的技术原理和算法逻辑给好好讲清楚，多加点公式结合自己的特征处理流程去讲🤔🤔🤔</p>
+<p>5.这里的分析模型的预测精度、泛化能力以及对业界的各种指导意义，预测精度的话就是可以采用训练集的划分去进行预测对比实验，因为测试集是没给磁芯损耗的，所以无法让我们看模型的预测精度，可以采用把训练集进行进一步划分的处理方法，从而可以得到多个模型的预测数据进行对比分析，对业界的指导意义这一部分可以在讲完建模的内容后补充一些原理知识即可，整个一个逻辑是这样，就是博主建议最后就是贴合问题去进行论文写作。🫡🫡🫡</p>
+<h2 id="问题五分析"><a href="#问题五分析" class="headerlink" title="问题五分析"></a>问题五分析</h2><p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727279542042.png" alt="1727279542042"></p>
+<p>对于问题五的问题阐述我们可以抽离出几个关键点进行分析</p>
+<ul>
+<li>首先的话就是一个同时考虑磁芯损耗和传输磁能评价指标的要求，但是凸出的一个问题就是两个评价指标的比重问题或者是衡量它重要性的问题，所以博主所设计的目标函数存在两个评价指标的各自权重，并通过算法去寻优最佳权重。🤔🤔🤔</li>
+<li>这里提到以问题四构建的磁芯损耗预测模型为目标函数，博主理解的为将输入的特征输入问题四所设计的模型所得的磁芯损耗作为评价指标之一，同时抽取特征中的磁通密度峰值与频率计算此时对应的传输磁能，两个指标输入构建的目标函数得到综合得分，根据所设计的目标函数的最小值或者最大值进行寻优，找到最小的磁芯损耗与最大传输磁能组合。🤔🤔🤔</li>
+</ul>
+<h2 id="数模论文经验分享"><a href="#数模论文经验分享" class="headerlink" title="数模论文经验分享"></a>数模论文经验分享</h2><ul>
+<li>博主在完成代码及绘图部分时队友的初稿和报告差不多，距离论文的样子还遥遥无期，但是那时已经是24号下午了，所以博主和队友花了一凌晨时间将论文整了个七七八八，勉强有论文的样子了，首先就是定论文框架，队友以往年数模国奖论文为模板进行内容撰写，但是这里存在一个问题，队友只以一篇论文为模板，偏偏这篇论文的框架弱，它优秀的点在于其图表非常好看，而且对应的题目的理论性不高，但是数模论文对吧，公式和图表缺一不可，于是我们以一篇图表优秀的范文和一篇建模理论优秀的范文为参考进行我们论文框架的设计。</li>
+</ul>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727343537255.png" alt="1727343537255"></p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727343627651.png" alt="1727343627651"></p>
+<ul>
+<li>针对于每个子问题的问题，我们先敲定论文的每个问题的建模与求解的子标题，子标题中大体的像问题分析、模型建立这种内容五个问题保持一致，但是结合各个问题的不同要求设置不同的子标题如测试应用、最优条件确定等。定好子标题后，首先的话模型假设与符号说明部分将所编写代码中的变量抽取出来，绘制三线表进行展现。模型假设的话针对于五道问题各自进行一个模型设计的假设条件说明即可。</li>
+<li>在整体问题分析部分，我们采取总体问题所应该采取的处理逻辑结合自己的实际处理方法绘制一个总体的流程图，当然不是说一定要去画这种流程图，但是博主还是推荐这样去进行问题阐述，因为只有文字评审很难在短时间内看出你论文的处理逻辑，而且很多数模国奖论文都采取了这种方式，强烈推荐大家这样做🙏🙏🙏</li>
+</ul>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727344121973.png" alt="1727344121973"></p>
+<ul>
+<li>另外的话就是论文的公式的话建议整个团队的队员使用MathType进行公式编写，后续进行统一的编号处理，图表的话统一采用交叉引用，统一设置好图表的格式，后续整合的时候只需要更新引用即可，可以极大的减少工作量，另外的话就是比如说word自带的公式可能有些变量没有，这也会带来一些不必要的麻烦，表的话统一推荐用三线图来展示数据，好的文章一般都使用三线表来展示，本身也好看，也强烈推荐🙏🙏🙏</li>
+</ul>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727344764561.png" alt="1727344764561"></p>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727344587776.png" alt="1727344587776"></p>
+<ul>
+<li>在写模型建立的内容的时候，公式一定要写，哪怕模型是别人模型，公式一定要写，重要的话说两遍！👻👻👻结合问题中的数据处理的逻辑，不能纯将公式和理论，一定要结合你的处理逻辑把这部分内容讲的流程，避免一大堆公式的生搬硬套又或者说单纯的逻辑阐述。</li>
+</ul>
+<p><img src="/../images/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%A0%94%E8%B5%9B%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%EF%BC%89/1727345082148.png" alt="1727345082148"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在写总结的内容的时候已经是提交完论文和MD5码的第二天了，昨天睡到晚上然后实验室又有些其他事情导致博客没办法及时更新，然后希望有个好结果吧，也希望大家的数模比赛都能有个好结果✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
