@@ -28,13 +28,54 @@
  replay-btn" aria-hidden="true"></i></a>
     <div class="post-title">
         <p>
-            Nacos环境搭建
+            Windows11系统下Nacos环境搭建
         </p>
         <hr>
     </div>
     <div class="post-content">
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文为博主在搭建项目所需环境依赖时所编写的Nacos配置过程记录，希望能够对大家有所帮助，不足之处欢迎大家批评指正🤝🤝🤝</p>
-<h2 id="Nacos简介"><a href="#Nacos简介" class="headerlink" title="Nacos简介"></a>Nacos简介</h2>
+<h2 id="Nacos简介"><a href="#Nacos简介" class="headerlink" title="Nacos简介"></a>Nacos简介</h2><p>Nacos是微服务场景下的配置中心的注册中心，就是说两个微服务之间要通信的话首先是需要将其中一个服务注册到Nacos，然后另一个服务才能通过Nacos来调用服务。🤔🤔🤔</p>
+<h2 id="Nacos-Server下载和安装"><a href="#Nacos-Server下载和安装" class="headerlink" title="Nacos Server下载和安装"></a>Nacos Server下载和安装</h2><p> <a target="_blank" rel="noopener" href="https://nacos.io/download/nacos-server/">官网下载地址</a> </p>
+<p> 项目建议是Nacos的版本保持一致，不然怕出什么bug😅😅😅，大家自行选择下载自己所需的版本即可</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727445646994.png" alt="1727445646994"></p>
+<p>解压后打开文件夹如下所示：</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727446392955.png" alt="1727446392955"></p>
+<h2 id="Nacos的持久化配置"><a href="#Nacos的持久化配置" class="headerlink" title="Nacos的持久化配置"></a>Nacos的持久化配置</h2><p> Nacos 的持久化配置是指将服务注册、配置信息等数据存储在一个持久化存储（如数据库）中，以确保在 Nacos 服务重启、故障或分布式部署的情况下，数据不会丢失，系统能够正常恢复。默认情况下，Nacos 的服务注册数据保存在内存中，这意味着一旦 Nacos 重启，所有注册的服务数据会丢失。因此，启用持久化配置非常重要，尤其是在生产环境中。 🤔🤔🤔</p>
+<p>其中Nacos的默认配置文件application.properties在conf文件夹下。</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727446680579.png" alt="1727446680579"></p>
+<p>博主按照项目要求将Nacos的配置信息进行了设置， 通常Nacos 使用 MySQL 来进行持久化存储。我们需要准备一个 MySQL 数据库，并导入 Nacos 提供的初始化脚本来创建必要的表。 对MySQL的有重装需求的推荐阅读博主的另一篇博客 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_48694749/article/details/142379172?spm=1001.2014.3001.5501">Windows11系统下MySQL环境重装教程</a> 😁😁😁。在Nacos 的配置文件中，设置数据库的连接信息以启用持久化存储。需要我们在 <code>application.properties</code> 文件中添加 MySQL 数据库的连接参数 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.platform=mysql</span><br><span class="line">db.num=1</span><br><span class="line">db.url.0=jdbc:mysql://&lt;你的数据库的url，本地一般是127.0.0.1&gt;:3306/&lt;Nacos数据库配置信息数据库名&gt;?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true</span><br><span class="line">db.user=你的数据库用户名（一般本地用户的话为root，以自己的实际情况为准）</span><br><span class="line">db.password=&lt;你的数据库密码&gt;</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，我们直接双击startup.cmd启动Nacos</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727447974328.png" alt="1727447974328"></p>
+<p>这里博主启动失败的原因是本地的MySQL服务没有启动，如果有相同问题的记得启动一下服务。</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727448309466.png" alt="1727448309466"></p>
+<p>博主还遇到问题就是Nacos启动的时候默认是集群模式启动导致无法成功启动</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727449244769.png" alt="1727449244769"></p>
+<p>这里的话我们应该是要修改为单节点方式去启动，我们修改startup.cmd文件</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727449352025.png" alt="1727449352025"></p>
+<p>修改后再次双击startup.cmd启动Nacos，显示Nacos已经成功以单节点模式启动了，但是后续闪退了😅😅😅</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727449614711.png" alt="1727449614711"></p>
+<p>日志文件又为空，嗯~，不知道是什么问题😅😅😅</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727449670457.png" alt="1727449670457"></p>
+<p>检查是否存在端口冲突问题，结果显示没冲突😅😅😅</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727449939777.png" alt="1727449939777"></p>
+<p>检查博主设置的MySQL配置信息的连接问题，结果显示也没大问题😅😅😅</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727450457441.png" alt="1727450457441"></p>
+<p>后面发现这个文件才有日志记录</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727451625341.png" alt="1727451625341"></p>
+<p>显示数据库配置问题，但是我前面已经测试过了我数据库的连接是没有问题的🤔🤔🤔</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727451678757.png" alt="1727451678757"></p>
+<p>经搜索资料得知，连接的数据库需要有Nacos需要的表，否则可能会启动失败🤔🤔🤔，我们来试一下看看是不是这样。我们首先找到Nacos的数据库初始化脚本mysql-schema.sql</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727451840367.png" alt="1727451840367"></p>
+<p>然后我们在控制台输入命令去创建对应的数据库表</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727451952586.png" alt="1727451952586"></p>
+<p>再次进行启动</p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727451976300.png" alt="1727451976300"></p>
+<p>启动成功啦！！！然后我们可以访问<a target="_blank" rel="noopener" href="http://localhost:8848/nacos%E5%8D%B3Nacos%E6%8E%A7%E5%88%B6%E5%8F%B0%EF%BC%8C%E9%BB%98%E8%AE%A4%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%E9%83%BD%E6%98%AFnacos">http://localhost:8848/nacos即Nacos控制台，默认用户名密码都是nacos</a></p>
+<p><img src="/../images/Nacos%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/1727452053652.png" alt="1727452053652"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天的环境配置学习都到这里结束啦，又是配环境的一天我淦🥶🥶🥶，明天接着加油朋友们，晚安🌝🌝🌝</p>
+
     </div>
 
     
