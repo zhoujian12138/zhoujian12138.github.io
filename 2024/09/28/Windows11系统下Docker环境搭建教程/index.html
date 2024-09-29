@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            Windows11系统下Docker环境搭建教程
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 本文为博主在项目环境搭建时记录的Docker安装流程，希望对大家能够有所帮助，不足之处欢迎批评指正🤝🤝🤝 </p>
+<h2 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h2><p>Docker 就像一个“容器”平台，可以帮你把应用程序和它运行所需的所有东西（比如代码、依赖、环境变量等）打包在一个独立的小盒子里，不论你在什么地方运行这个“盒子”，应用都能在相同的环境下工作，避免了“在我电脑上可以跑，在你电脑上跑不起来”的问题。简单来说，Docker就像是一个便携的“迷你操作系统”，你可以把应用装进这个小系统里，不管在哪里都能轻松运行，大大简化了应用的部署和管理。 </p>
+<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><p>因为docker依赖linux内核，所以只能在linux下使用。要在windows下安装docker的话有以下几种方式</p>
+<ul>
+<li>安装Linux虚拟机</li>
+<li>安装WSL2，WSL2是运行在虚拟机上的一个完整的linux内核，可以利用WSL2安装docker</li>
+<li>安装Docker Desktop for Windows</li>
+</ul>
+<p>这里博主打算用第三种方法来安装，这是官网下载链接 <a target="_blank" rel="noopener" href="https://www.docker.com/get-started/">Docker Desktop for Windows官网链接</a> </p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727516735801.png" alt="1727516735801"></p>
+<p>双击exe文件进行安装</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727517179885.png" alt="1727517179885"></p>
+<p>这是Docker Desktop安装过程中的解压文件阶段，需要耐心等待一会儿🐌🐌🐌</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727517107509.png" alt="1727517107509"></p>
+<p>安装成功，还需重启电脑使得安装生效，注意点击这个按钮前一些未保存的工作保存一下，因为点击会立即重启Windows</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727517443169.png" alt="1727517443169"></p>
+<p>重启后自动弹出下面这个界面，个人学习的话免费使用，直接Accept</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727518191229.png" alt="1727518191229"></p>
+<p>这里博主安装是出于学习的目的就直接推荐配置吧</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727518354988.png" alt="1727518354988"></p>
+<p>这里的话Docker的在线服务和本地服务的区别就在于是否要使用Docker的云端功能和社区资源🤔🤔🤔，这里虽然博主应该是本地开发和测试应用但是还是准备注册一个Docker账户</p>
+<ul>
+<li>本地服务：可以在本地使用Docker来创建、管理和运行容器。所有的操作都在自己的电脑上完成，无需连接到互联网。</li>
+<li>在线服务：登录后可以从Docker Hub直接拉取镜像或者将本地创建的镜像推送到Docker Hub(一个云端镜像仓库，可以共享或者发布自己的Docker镜像)</li>
+</ul>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727602756261.png" alt="1727602756261"></p>
+<p>注册完毕后登录，然后登录成功跳转到Docker Desktop安装完成的欢迎调查，这里博主就勾选了学生选项，然后是勾选学习选项</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727604513028.png" alt="1727604513028"></p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727604595172.png" alt="1727604595172"></p>
+<p>至此Docker就算安装成功啦，很简单的步骤，大家照着一步一步来就能很快安装好了</p>
+<p><img src="/../images/Windows11%E7%B3%BB%E7%BB%9F%E4%B8%8BDocker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1727606665607.png" alt="1727606665607"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天先简单安装一下Docker环境吧，后续博主在学习的过程中再来分享些Docker的使用教程，今天先到这里了，继续加油✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
