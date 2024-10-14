@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之回溯算法（三）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 今天是学习回溯算法的第三天，我们继续来一起学习回溯算法蕴含的逻辑处理，希望博主记录的内容能够对大家有所帮助 ，一起加油吧朋友们！💪💪💪 </p>
+<h2 id="复原IP地址"><a href="#复原IP地址" class="headerlink" title="复原IP地址"></a>复原IP地址</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/restore-ip-addresses/">LeetCode题目链接</a></p>
+<p>这道题就是给一个字符串，让我们通过插入三个.来使得其成为一个ip地址，然后判断ip地址的有效性，组成ip地址的四个整数需要为0~255之间</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89/1728870242781.png" alt="1728870242781"></p>
+<p>我们来思路梳理</p>
+<ul>
+<li>通过递归在不同位置插入 <code>.</code>，将字符串划分为四个部分🤔 在插入 <code>.</code> 后，判断每部分是否是有效的 IP 地址段（数值在 0-255 之间，且没有前导 0）🤔 当字符串分割成四部分并且已经遍历完整个字符串时，检查其是否符合 IP 地址格式。如果符合，则将其加入结果集🤔 如果某个部分无效，或剩余的字符无法分成合法的 IP 地址部分，提前终止当前路径的递归，减少不必要的计算🤔</li>
+</ul>
+<p>我们来进一步梳理回溯三要数</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//s: 输入的字符串</span></span><br><span class="line"><span class="comment">//startIndex: 当前划分 IP 段的起始位置</span></span><br><span class="line"><span class="comment">//path: 当前已经划分出的 IP 段</span></span><br><span class="line"><span class="comment">//不需要返回值因为结果被直接存到结果集result中</span></span><br><span class="line">List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String s, <span class="type">int</span> startIndex, List&lt;String&gt; path)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件( 当 <code>path</code> 中已经有 4 段 IP 地址并且 <code>startIndex</code> 达到了字符串末尾，说明我们找到了一组有效的 IP 地址，加入到结果集中🤔)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 终止条件：path 已经有 4 段 IP 且正好用完字符串</span></span><br><span class="line"><span class="keyword">if</span> (path.size() == <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (startIndex == s.length()) &#123;</span><br><span class="line">        <span class="comment">// 形成合法 IP，加入结果集</span></span><br><span class="line">        result.add(String.join(<span class="string">&quot;.&quot;</span>, path));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;  <span class="comment">// 否则返回，不再继续处理</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程（ 每次从 <code>startIndex</code> 开始，逐步向后递增，每次截取一段子串，判断这段子串是否是合法的 IP 地址段（0-255 且不能有前导 0）🤔  如果子串合法，则递归继续处理剩下的部分，直到找到所有有效的划分方式 ）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单层搜索过程，从 startIndex 开始，尝试截取 1 到 3 个字符组成 IP 地址段</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; s.length() &amp;&amp; i &lt; startIndex + <span class="number">3</span>; i++)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">segment</span> <span class="operator">=</span> s.substring(startIndex, i + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//判断当前子串是否合法的ip段</span></span><br><span class="line">            <span class="keyword">if</span>(isValidSegment(segment))&#123;</span><br><span class="line">                path.add(segment);</span><br><span class="line">                backtracking(s, i + <span class="number">1</span>, path);</span><br><span class="line">                path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">restoreIpAddresses</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="comment">//如果字符串长度过长或过短，不可能形成合法 IP，直接返回空结果</span></span><br><span class="line">        <span class="keyword">if</span>(s.length() &lt; <span class="number">4</span> || s.length() &gt; <span class="number">12</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        backtracking(s, <span class="number">0</span>, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;());</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String s, <span class="type">int</span> startIndex, List&lt;String&gt; path)</span>&#123;</span><br><span class="line">        <span class="comment">// 终止条件：path 已经有 4 段 IP 且正好用完字符串</span></span><br><span class="line">        <span class="keyword">if</span>(path.size() == <span class="number">4</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(startIndex == s.length())&#123;</span><br><span class="line">                result.add(String.join(<span class="string">&quot;.&quot;</span>, path));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="comment">//单层搜索过程，从 startIndex 开始，尝试截取 1 到 3 个字符组成 IP 地址段</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; s.length() &amp;&amp; i &lt; startIndex + <span class="number">3</span>; i++)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">segment</span> <span class="operator">=</span> s.substring(startIndex, i + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//判断当前子串是否合法的ip段</span></span><br><span class="line">            <span class="keyword">if</span>(isValidSegment(segment))&#123;</span><br><span class="line">                path.add(segment);</span><br><span class="line">                backtracking(s, i + <span class="number">1</span>, path);</span><br><span class="line">                path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断一个字符串是否是合法的 IP 地址段</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isValidSegment</span><span class="params">(String segment)</span>&#123;</span><br><span class="line">        <span class="comment">// 如果以 &#x27;0&#x27; 开头且长度大于 1，则是无效的，因为不能有前导 0</span></span><br><span class="line">        <span class="keyword">if</span>(segment.length() &gt; <span class="number">1</span> &amp;&amp; segment.charAt(<span class="number">0</span>) == <span class="string">&#x27;0&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将字符串转为整数，检查是否在合法范围内</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> Integer.parseInt(segment);</span><br><span class="line">        <span class="keyword">return</span> num &gt;= <span class="number">0</span> &amp;&amp; num &lt;= <span class="number">255</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/description/">LeetCode题目链接</a></p>
+<p>这道题就是给一个整数数组返回它所有的子集</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89/1728877072322.png" alt="1728877072322"></p>
+<p>我们来思路梳理</p>
+<ul>
+<li>使用递归，从数组的第一个元素开始，每次决定是否将当前元素加入当前子集🤔 对于每一个元素，我们有两种选择：加入当前子集或不加入。通过这两种选择递归下去，能够生成所有的子集组合🤔 当遍历完整个数组时，将当前生成的子集加入到结果集中🤔 由于题目要求元素互不相同，因此不存在重复子集的问题，不需要去重</li>
+</ul>
+<p>我们来进一步梳理回溯三要素</p>
+<ul>
+<li>确定递归函数的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//nums: 输入的数组</span></span><br><span class="line"><span class="comment">//startIndex: 当前递归到数组的哪个位置</span></span><br><span class="line"><span class="comment">//path: 当前构建的子集</span></span><br><span class="line"><span class="comment">//result: 存储所有可能的子集的列表</span></span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> startIndex, List&lt;Integer&gt; path)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在这个问题中，不需要显式的终止条件，因为我们每次都将当前路径（子集）加入结果集，递归自然会结束，直到遍历完整个数组🤔🤔🤔</span></span><br><span class="line">result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//每次递归都将当前路径（子集）加入结果集</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; nums.length; i++) &#123;</span><br><span class="line">    path.add(nums[i]);<span class="comment">// 选择当前数字加入子集</span></span><br><span class="line">    backtracking(nums, i + <span class="number">1</span>, path);<span class="comment">// 递归，继续选择下一个数字（从 i+1 开始）</span></span><br><span class="line">    path.remove(path.size() - <span class="number">1</span>);   <span class="comment">// 回溯，移除当前数字，尝试其他组合</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整的回溯代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">subsets</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        backtracking(nums, <span class="number">0</span>, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;());</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> startIndex, List&lt;Integer&gt; path)</span>&#123;</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; nums.length; i++)&#123;</span><br><span class="line">            path.add(nums[i]);</span><br><span class="line">            backtracking(nums, i + <span class="number">1</span>, path);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子集II"><a href="#子集II" class="headerlink" title="子集II"></a>子集II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets-ii/description/">LeetCode题目链接</a></p>
+<p>这道题相较于上题而言，改变的是所给的整数数组的数可能有重复</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89/1728879111323.png" alt="1728879111323"></p>
+<p>我们来思路梳理</p>
+<ul>
+<li>这个问题与之前的子集问题类似，但区别在于数组中可能包含重复元素，因此在生成子集时需要避免重复子集的出现。为了解决这个问题，我们可以在递归过程中跳过重复元素，从而确保每个子集只会出现一次🤔🤔🤔所以我们先对数组进行排序，这样相同的元素会相邻出现，便于后续处理重复项🤔 使用递归生成子集，在每层递归中，对于重复的元素，跳过相同的元素🤔在同一层递归中，如果当前元素和前一个元素相同，则跳过该元素，这样可以避免重复组合的生成🤔当遍历完整个数组时，将当前的子集加入结果集</li>
+</ul>
+<p>我们来进行回溯三要素梳理</p>
+<ul>
+<li>确定递归函数的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//nums: 输入的整数数组（可能包含重复元素🤔）</span></span><br><span class="line"><span class="comment">//startIndex: 当前递归处理到的数组起始位置</span></span><br><span class="line"><span class="comment">//path: 当前构造中的子集</span></span><br><span class="line"><span class="comment">//result: 存储所有可能的子集的列表</span></span><br><span class="line"><span class="comment">//递归函数不需要返回值，结果将直接存入 result 列表中</span></span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> startIndex, List&lt;Integer&gt; path)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件（ 在这个问题中，没有显式的终止条件。每次递归都会将当前路径（子集）加入结果集，递归会自然结束，当 <code>startIndex</code> 达到数组末尾时不再继续🤔）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//每次递归都将当前路径（子集）加入结果集</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//单层搜索过程：从 startIndex 开始，遍历数组</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; nums.length; i++) &#123;</span><br><span class="line">    <span class="comment">//去重</span></span><br><span class="line">    <span class="keyword">if</span> (i &gt; startIndex &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>; <span class="comment">// 跳过重复的元素</span></span><br><span class="line">    path.add(nums[i]);</span><br><span class="line">    backtracking(nums, i + <span class="number">1</span>, path); <span class="comment">//注意 i + 1 是因为不能重复选择当前元素</span></span><br><span class="line">    path.remove(path.size() - <span class="number">1</span>);<span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">subsetsWithDup</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Arrays.sort(nums);<span class="comment">//首先对数组进行排序，这样相同的元素会相邻，方便后续去重处理</span></span><br><span class="line">        backtracking(nums, <span class="number">0</span>, <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;());</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> startIndex, List&lt;Integer&gt; path)</span>&#123;</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i &gt; startIndex &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            path.add(nums[i]);</span><br><span class="line">            backtracking(nums, i + <span class="number">1</span>, path);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天的回溯就学到这里啦，这几道题的处理都是和前几天的处理逻辑大差不差，去重是一样的排序逻辑，后续博主也将会开个项目专栏分享项目学习的经验，大家一起加油，奥利给✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
