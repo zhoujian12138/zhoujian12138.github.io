@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之二叉树（七）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 又是学习<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=LeetCode&spm=1001.2101.3001.7020">LeetCode</a>二叉树的新一天，今天还是继续学习一下<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91&spm=1001.2101.3001.7020">二叉搜索树</a>的内容，二叉树的基本内容快学习的差不多啦，希望博主记录的内容能够对大家有所帮助 ，一起加油吧朋友们！💪💪💪 </p>
+<h2 id="二叉搜索树中的插入操作"><a href="#二叉搜索树中的插入操作" class="headerlink" title="二叉搜索树中的插入操作"></a>二叉搜索树中的插入操作</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/insert-into-a-binary-search-tree/description/">LeetCode题目链接</a> </p>
+<p> 给定二叉搜索树（BST）的根节点 <code>root</code> 和要插入树中的值 <code>value</code> ，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 插入的值和原始二叉搜索树中的任意节点值都不同 。</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728372281669.png" alt="1728372281669"></p>
+<p>思路梳理🤔🤔</p>
+<ul>
+<li>题目中虽然提到了存在多种有效的插入方式，但是我们可以就以遍历找到对应位置插入节点即可🤔</li>
+</ul>
+<p>递归三要素梳理🤔🤔</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里的返回值可以有也可以没有，我们先给出有的思路，有返回值即直接返回一个TreeNode</span></span><br><span class="line"><span class="comment">//参数的话就是要插入的树根节点和要插入的值</span></span><br><span class="line"><span class="keyword">public</span> TreeNode <span class="title function_">insertIntoBST</span><span class="params">(TreeNode root, <span class="type">int</span> val)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的出口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历到插入位置null时直接返回插入节点，等下处理左右子树的时候直接让root.left = 返回节点即可🤔</span></span><br><span class="line"><span class="keyword">if</span>(root == <span class="literal">null</span>)&#123; <span class="comment">//找到位置插入节点</span></span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val);</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的单层处理逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//即判断当前节点值和要插入值大小进而往左或者右子树去进行插入操作🤔</span></span><br><span class="line"><span class="keyword">if</span>(root.val &gt; val)&#123; <span class="comment">//往左去插</span></span><br><span class="line">    root.left = insertIntoBST(root.left, val);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; val)&#123; <span class="comment">//往右去插</span></span><br><span class="line">    root.right = insertIntoBST(root.right, val);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> root; <span class="comment">//返回插完的树</span></span><br></pre></td></tr></table></figure>
+
+<p>有返回值的总的递归代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**递归法有返回值 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">insertIntoBST</span><span class="params">(TreeNode root, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="comment">/*递归出口*/</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123; <span class="comment">//找到位置插入节点</span></span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val);</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*单层处理逻辑*/</span></span><br><span class="line">        <span class="keyword">if</span>(root.val &gt; val)&#123; <span class="comment">//往左去插</span></span><br><span class="line">            root.left = insertIntoBST(root.left, val);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; val)&#123; <span class="comment">//往右去插</span></span><br><span class="line">            root.right = insertIntoBST(root.right, val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root; <span class="comment">//返回插完的树</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>而没有返回值则需要有一个变量来记录每一次遍历的节点的父结点，当往下一层处理时就可以对父结点的左右子节点进行插值操作🤔，无返回值的递归方法如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**递归法没有返回值 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">parent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>); <span class="comment">// 记录遍历节点的父结点</span></span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">insertIntoBST</span><span class="params">(TreeNode root, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123; <span class="comment">// 提前结束</span></span><br><span class="line">            root = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val);</span><br><span class="line">        &#125;</span><br><span class="line">        traversal(root, val);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root, <span class="type">int</span> val)</span>&#123;</span><br><span class="line">        <span class="comment">/*递归出口*/</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123; <span class="comment">//找到位置插入节点</span></span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val);</span><br><span class="line">            <span class="keyword">if</span>(parent.val &gt; val)&#123;</span><br><span class="line">                parent.left = node;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                parent.right = node;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*单层处理逻辑*/</span></span><br><span class="line">        parent = root;</span><br><span class="line">        <span class="keyword">if</span>(root.val &gt; val)traversal(root.left, val);<span class="comment">//往左去插</span></span><br><span class="line">        <span class="keyword">if</span>(root.val &lt; val)traversal(root.right, val);<span class="comment">//往右去插   </span></span><br><span class="line">        <span class="keyword">return</span> ; <span class="comment">//返回</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>而迭代法同理就是也要记录遍历节点的父结点进行记录追踪，然后循环找到遍历位置后对父结点进行插值操作🤔，迭代方法代码如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**迭代法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">insertIntoBST</span><span class="params">(TreeNode root, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123; <span class="comment">//提前结束</span></span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val);</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">parent</span> <span class="operator">=</span> root;<span class="comment">//记录当前节点的父结点</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">null</span>)&#123; <span class="comment">//循环遍历节点找插入位置</span></span><br><span class="line">            parent = cur;</span><br><span class="line">            <span class="keyword">if</span>(cur.val &gt; val) cur = cur.left;</span><br><span class="line">            <span class="keyword">else</span> cur = cur.right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(val); <span class="comment">//找到位置后根据父结点的值来判断插入方式</span></span><br><span class="line">        <span class="keyword">if</span>(val &gt; parent.val) parent.right = node;</span><br><span class="line">        <span class="keyword">else</span> parent.left = node;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除二叉搜索树中的节点"><a href="#删除二叉搜索树中的节点" class="headerlink" title="删除二叉搜索树中的节点"></a>删除二叉搜索树中的节点</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-node-in-a-bst/description/">LeetCode题目链接</a> </p>
+<p>给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。 返回二叉搜索树的根节点。</p>
+<p>我们来梳理一下思路🤔🤔，我们重点就要搞清楚单层处理逻辑</p>
+<ul>
+<li>第一种情况：递归没找到要删除的节点，遍历到空节点直接返回了</li>
+</ul>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728376731370.png" alt="1728376731370"></p>
+<ul>
+<li>第二种情况：找到要删除的节点并且节点是叶子节点，直接删除返回根节点null</li>
+</ul>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728376841534.png" alt="1728376841534"></p>
+<ul>
+<li><p>第三种情况：找到要删除的节点并且节点的左孩子为空，右孩子不为空，删除节点并让右孩子补位，返回右孩子为根节点</p>
+</li>
+<li><p>第四种情况：找到要删除的节点并且节点的右孩子为空，左孩子不为空，删除节点并让左孩子补位，返回左孩子为根节点</p>
+</li>
+</ul>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728377518530.png" alt="1728377518530"></p>
+<ul>
+<li>第五种情况：左右孩子都不为空，则将删除节点的左子树作为删除节点右子树的最左节点的左孩子🤔🤔</li>
+</ul>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728378497739.png" alt="1728378497739"></p>
+<p>我们来梳理一下递归三要素🤔🤔</p>
+<ul>
+<li>确定递归的返回值和参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//要返回根节点，对应要传入要删的子树根节点和要删除的值</span></span><br><span class="line"><span class="keyword">public</span> TreeNode <span class="title function_">deleteNode</span><span class="params">(TreeNode root, <span class="type">int</span> key)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的出口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*递归出口（五种情况）*/</span></span><br><span class="line"><span class="keyword">if</span>(root == <span class="literal">null</span>) <span class="keyword">return</span> root;<span class="comment">//第一种情况</span></span><br><span class="line"><span class="keyword">if</span>(root.val == key)&#123;</span><br><span class="line">	<span class="keyword">if</span>(root.left == <span class="literal">null</span> &amp;&amp; root.right == <span class="literal">null</span>) &#123;<span class="comment">//第二种情况</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(root.left == <span class="literal">null</span>)&#123;<span class="comment">//第三种情况</span></span><br><span class="line">		<span class="keyword">return</span> root.right;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(root.right == <span class="literal">null</span>)&#123;<span class="comment">//第四种情况</span></span><br><span class="line">		<span class="keyword">return</span> root.left;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;<span class="comment">//第五种情况</span></span><br><span class="line">		<span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> root.right;</span><br><span class="line">		<span class="keyword">while</span>(node.left != <span class="literal">null</span>)&#123;</span><br><span class="line">			node = node.left;</span><br><span class="line">		&#125;</span><br><span class="line">		node.left = root.left;</span><br><span class="line">		root = root.right;</span><br><span class="line">		<span class="keyword">return</span> root;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的单层处理逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*单层处理逻辑*/</span></span><br><span class="line"><span class="keyword">if</span>(root.val &gt; key) root.left = deleteNode(root.left, key);</span><br><span class="line"><span class="keyword">if</span>(root.val &lt; key) root.right = deleteNode(root.right, key);</span><br><span class="line"><span class="keyword">return</span> root;</span><br></pre></td></tr></table></figure>
+
+<p>迭代法的话有点复杂这里我们就不写了，感兴趣的话大家自己可以写一下🫡🫡🫡</p>
+<h2 id="修剪二叉搜索树"><a href="#修剪二叉搜索树" class="headerlink" title="修剪二叉搜索树"></a>修剪二叉搜索树</h2><p> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/trim-a-binary-search-tree/">LeetCode题目链接</a> </p>
+<p>给一个二叉树并指定最小数值边界和最大数值边界，通过修剪二叉树使得二叉树的所有节点值在这个闭区间中，返回修剪好的二叉搜索树的根节点。</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728432858426.png" alt="1728432858426"></p>
+<p>我们来思路梳理一下🤔🤔</p>
+<ul>
+<li>从上图中可以看到如果单纯去判断<code>if(root.val &lt;low || root &gt;high) return null </code>的话，则上图中修剪区间[5,10]的时候就只能剪出一个8了，所以这该怎么处理呢？🤔🤔就是在上图中修剪区间为[5,10]时如果剪掉0节点的时候它的右孩子不为空就也需要修剪，我们将其右孩子连接上其父结点继续修剪即可😮😮</li>
+</ul>
+<p>我们进一步来梳理递归三要素</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//与插入和删除二叉搜索树节点类似，这里有没有返回值都可以，但是有返回值更方便点，可以通过递归的返回值来移除节点</span></span><br><span class="line"><span class="comment">//参数就是要修剪的树和修剪边界</span></span><br><span class="line">TreeNode <span class="title function_">trimBST</span><span class="params">(TreeNode root, <span class="type">int</span> low, <span class="type">int</span> high)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的出口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历节点修剪节点肯定不会是出口，就是肯定要修剪完整个树，所以递归的出口还是到空节点处理</span></span><br><span class="line"><span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的单层处理逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(root.val &lt; low)&#123;<span class="comment">//如果当前节点小于边界则应该修剪其右孩子并返回符合条件的头节点</span></span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> trimBST(root.right, low, high);<span class="comment">//这里是把root给剪掉了去处理root.right了</span></span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(root.val &gt; high)&#123;<span class="comment">//如果当前节点大于边界则应该修剪其左孩子并返回符合条件的头节点</span></span><br><span class="line">	<span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> trimBST(root.left, low, high);<span class="comment">//这里是把root给剪掉了去处理root.left了</span></span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*节点值在边界中则处理其左右两孩子子树*/</span></span><br><span class="line">root.left = trimBST(root.left, low, high);</span><br><span class="line">root.right = trimBST(root.right, low, high);</span><br><span class="line"><span class="keyword">return</span> root;<span class="comment">//返回节点</span></span><br></pre></td></tr></table></figure>
+
+<p>递归完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**递归法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">trimBST</span><span class="params">(TreeNode root, <span class="type">int</span> low, <span class="type">int</span> high)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(root.val &lt; low)&#123;</span><br><span class="line">	        <span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> trimBST(root.right, low, high);<span class="comment">//把root剪掉处理其右孩子</span></span><br><span class="line">            <span class="keyword">return</span> right;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(root.val &gt; high)&#123;</span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> trimBST(root.left, low, high);<span class="comment">//把root剪掉处理其右孩子</span></span><br><span class="line">            <span class="keyword">return</span> left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*节点值在边界中则处理其左右两孩子子树*/</span></span><br><span class="line">        root.left = trimBST(root.left, low, high);</span><br><span class="line">        root.right = trimBST(root.right, low, high);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们来梳理下迭代法的处理方式🤔🤔</p>
+<ul>
+<li>因为二叉搜索树是有序的，不需要用栈来存储节点。我们循环处理的话需要注意，因为涉及判断要不要把左孩子的右子树连接到上一层，所以相当于循环处理三层，首先找到一个边界内的头节点，然后修剪左孩子（相当于往小边界找，若找到比边界还小则把右孩子连接处理节点的父结点直到空节点），然后右孩子的修剪逻辑类似。</li>
+</ul>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E4%B8%83%EF%BC%89/1728437179594.png" alt="1728437179594"></p>
+<p>迭代代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**迭代法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">trimBST</span><span class="params">(TreeNode root, <span class="type">int</span> low, <span class="type">int</span> high)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span> <span class="literal">null</span>; <span class="comment">//提前结束</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//首先是要找到在边界内的头节点</span></span><br><span class="line">        <span class="keyword">while</span>(root != <span class="literal">null</span> &amp;&amp; (root.val &lt; low || root.val &gt; high))&#123;</span><br><span class="line">            <span class="keyword">if</span>(root.val &lt; low)root = root.right;<span class="comment">//往右找</span></span><br><span class="line">            <span class="keyword">else</span> root = root.left;<span class="comment">//往左走</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> root;</span><br><span class="line">        <span class="comment">//处理左孩子</span></span><br><span class="line">        <span class="keyword">while</span>(node != <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(node.left != <span class="literal">null</span> &amp;&amp; node.left.val &lt; low)&#123;</span><br><span class="line">                node.left = node.left.right;<span class="comment">//把右孩子连接到父结点</span></span><br><span class="line">            &#125;</span><br><span class="line">            node = node.left; <span class="comment">//继续往小了找</span></span><br><span class="line">        &#125;</span><br><span class="line">        node = root;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//处理右孩子</span></span><br><span class="line">        <span class="keyword">while</span>(node != <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">while</span>(node.right != <span class="literal">null</span> &amp;&amp; node.right.val &gt; high)&#123;</span><br><span class="line">                node.right = node.right.left;<span class="comment">//把右孩子连接到父结点</span></span><br><span class="line">            &#125;</span><br><span class="line">            node = node.right; <span class="comment">//继续往小了找</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>二叉树的内容基本就要学习的差不多了，还剩下一些，我们继续加油，后面开始回溯的基本内容的学习✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

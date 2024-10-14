@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之回溯算法（二）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天是学习回溯算法的第二天，从昨天的学习中我们可以知道回溯算法也有一套逻辑格式，我们对题目进行对应格式的逻辑分析即可，希望博主记录的内容能够对大家有所帮助 ，一起加油吧朋友们！💪💪💪 </p>
+<h2 id="组合总和"><a href="#组合总和" class="headerlink" title="组合总和"></a>组合总和</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum/description/">LeetCode题目链接</a></p>
+<p>这道题目是给一个无重复数的整数数组  <code>candidates</code>  和一个目标和  <code>target</code>  ，然后要求找到candidates中的所有不同组合，组合的数和为<code>target</code>， <code>candidates</code>  中的数可以在组合中重复出现。</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/1728790375984.png" alt="1728790375984"></p>
+<p>我们来梳理一下逻辑</p>
+<ul>
+<li>使用回溯法 从 <code>candidates</code> 中每次选择一个数字加入当前组合,然后在递归过程中保持当前组合的和不超过 <code>target</code>🤔如果组合的和等于 <code>target</code>，则将其加入结果集。每次选择一个数字后，允许继续选择该数字（因为同一个数字可以重复使用），但不允许选择比当前数字更小的数字（避免重复组合）🤔  通过回溯和剪枝，避免无效的组合，直到找出所有符合条件的组合🤔</li>
+</ul>
+<p>我们进一步来梳理回溯三要素</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();<span class="comment">//结果集</span></span><br><span class="line">List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();<span class="comment">//组合</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯的终止条件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> path.stream().mapToInt(Integer::intValue).sum();</span><br><span class="line"><span class="keyword">if</span>(sum &gt; target) <span class="keyword">return</span>;</span><br><span class="line"><span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">    result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//添加组合副本</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length; i++)&#123;</span><br><span class="line">    path.add(candidates[i]);<span class="comment">//添加到组合中</span></span><br><span class="line">    backtracking(candidates, target, i);<span class="comment">//这里不是i+1是指往下递归选取组合时可以选取重复的数</span></span><br><span class="line">    path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**未剪枝 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        backtracking(candidates, target, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> path.stream().mapToInt(Integer::intValue).sum();</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; target) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length; i++)&#123;</span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            backtracking(candidates, target, i);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们再来进行剪枝，对数组进行升序排序，在搜索时若提前发现已存组合和要添加的数和超出target则不进行搜索🤔🤔🤔</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**剪枝 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        Arrays.sort(candidates);<span class="comment">//升序为了剪掉不必要的搜索过程</span></span><br><span class="line">        backtracking(candidates, target, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> path.stream().mapToInt(Integer::intValue).sum();</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; target) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length &amp;&amp; sum + candidates[i] &lt;= target; i++)&#123;<span class="comment">//和大于target的搜索过程剪掉</span></span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            backtracking(candidates, target, i);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到剪枝前后的速度有所提升</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/1728791392337.png" alt="1728791392337"></p>
+<p>但实际上速度还能有所提升,可以把每次对组合的求和操作转换为递归的参数传入，递归时更新组合和这个参数即可🤔🤔🤔</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**剪枝并增加sum参数 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        Arrays.sort(candidates);<span class="comment">//升序为了剪掉不必要的搜索过程</span></span><br><span class="line">        backtracking(candidates, target, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> sum,<span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(sum + candidates[i] &gt; target) <span class="keyword">break</span>;<span class="comment">//和大于target的搜索过程剪掉</span></span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            backtracking(candidates, target, sum+ candidates[i], i);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/1728791593653.png" alt="1728791593653"></p>
+<h2 id="组合总和II"><a href="#组合总和II" class="headerlink" title="组合总和II"></a>组合总和II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/">LeetCode题目链接</a></p>
+<p>这道题也是给定一个整数数组<code>candidates</code>，从其中选取数字组合使得其的和为目标和等于所给的<code>target</code>,但是数字不能重复啦，每个数字只能使用一次</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/1728791901436.png" alt="1728791901436"></p>
+<p>我们来梳理思路</p>
+<ul>
+<li>我们先对 <code>candidates</code> 进行排序，方便在递归中去重🤔 从第一个数字开始，每次选择一个数字加入当前组合，然后在递归过程中，如果发现当前数字与前一个数字相同，跳过该数字，避免生成重复组合🤔  如果组合的和等于 <code>target</code>，则将该组合加入结果集。如果和超过 <code>target</code>，则终止当前递归路径🤔 在递归返回时，移除最后一个加入的数字，尝试新的组合路径🤔</li>
+</ul>
+<p>我们来梳理回溯三要素</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;<span class="comment">//用来存组合的和</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backTracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯的终止条件(这里把判断和的大小的处理放在单层搜索过程的剪枝处理中)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">	result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length &amp;&amp; sum + candidates[i] &lt;= target; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; startIndex &amp;&amp; candidates[i] == candidates[i - <span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line">    sum += candidates[i];</span><br><span class="line">    path.add(candidates[i]);</span><br><span class="line">    backTracking(candidates, target, i + <span class="number">1</span>);</span><br><span class="line">    sum -= path.getLast();</span><br><span class="line">    path.removeLast();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum2</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        Arrays.sort(candidates);<span class="comment">//升序排列为了去重</span></span><br><span class="line">        backTracking(candidates, target, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backTracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length &amp;&amp; sum + candidates[i] &lt;= target; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i &gt; startIndex &amp;&amp; candidates[i] == candidates[i - <span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line">            sum += candidates[i];</span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            backTracking(candidates, target, i + <span class="number">1</span>);</span><br><span class="line">            sum -= path.getLast();</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分割回文串"><a href="#分割回文串" class="headerlink" title="分割回文串"></a>分割回文串</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/palindrome-partitioning/">LeetCode题目链接</a></p>
+<p>这道题就是给一个字符串，然后要把这个字符串分割成一些回文子串，返回所有分割方案，每个分割方案就是一个组合</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/1728792687345.png" alt="1728792687345"></p>
+<p>我们来梳理一下思路</p>
+<ul>
+<li>逐步从字符串中切割子串，检查子串是否为回文。如果是回文，则将子串加入当前分割路径🤔 在递归过程中，可以使用双指针或预先使用动态规划表来判断子串是否为回文，这里我们先使用双指针来判断回文🤔 当递归到字符串末尾时，当前分割路径即为一个有效的回文分割，将其加入结果集🤔 在递归返回时，移除最后一个加入的子串，尝试不同的分割方案🤔</li>
+</ul>
+<p>我们来进一步梳理回溯三要素</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;String&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">List&lt;String&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String s, <span class="type">int</span> startIndex)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件(当搜索的数字索引到字符串的尾部则将分割的方案加入结果集中)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(startIndex == s.length())&#123;</span><br><span class="line">    result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; s.length(); i++)&#123;</span><br><span class="line">	<span class="type">String</span> <span class="variable">subStr</span> <span class="operator">=</span> s.substring(startIndex, i + <span class="number">1</span>);<span class="comment">//切割子串</span></span><br><span class="line">	<span class="keyword">if</span>(check(subStr))&#123;</span><br><span class="line">		path.add(subStr);<span class="comment">//切割的是回文子串则加入组合方案中</span></span><br><span class="line">		backtracking(s, i + <span class="number">1</span>);<span class="comment">//递归继续尝试分割剩余字符串</span></span><br><span class="line">		path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整的回溯代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;String&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;String&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; <span class="title function_">partition</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        backtracking(s, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String s, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(startIndex == s.length())&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; s.length(); i++)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">subStr</span> <span class="operator">=</span> s.substring(startIndex, i + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(check(subStr))&#123;</span><br><span class="line">                path.add(subStr);</span><br><span class="line">                backtracking(s, i + <span class="number">1</span>);</span><br><span class="line">                path.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">check</span><span class="params">(String str)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> str.length();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; len / <span class="number">2</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(str.charAt(i) != str.charAt(len - <span class="number">1</span> - i)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>又是学习回溯的新一天，继续加油✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

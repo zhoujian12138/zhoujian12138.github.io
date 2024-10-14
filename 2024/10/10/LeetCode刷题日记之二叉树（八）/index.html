@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之二叉树(八)
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 今天是第一轮学习LeetCode二叉树的最后一天啦，今天还是继续学习一下二叉搜索树的内容，希望博主记录的内容能够对大家有所帮助 ，一起加油吧朋友们！💪💪💪 </p>
+<h2 id="将有序数组转换为二叉搜索树"><a href="#将有序数组转换为二叉搜索树" class="headerlink" title="将有序数组转换为二叉搜索树"></a>将有序数组转换为二叉搜索树</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description/">LeetCode题目链接</a></p>
+<p>给一个升序的整数数组，把它转换成一棵平衡二叉搜索树</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%85%AB%EF%BC%89/1728608107541.png" alt="1728608107541"></p>
+<p>我们来思路梳理</p>
+<ul>
+<li>这道题就是从数组中构建一个一个的对应值的节点，构建平衡二叉搜索树的话我们可以每次构建数组中间下标对应值的节点，然后递归构建左右子树，也递归分割数组🤔🤔🤔</li>
+</ul>
+<p>我们进一步来梳理递归三要素</p>
+<ul>
+<li>确定递归参数值和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回值需要返回构建好的平衡二叉搜索树的根节点</span></span><br><span class="line"><span class="comment">//参数值的话需要分割数组的左右下标与数组</span></span><br><span class="line"><span class="keyword">private</span> TreeNode <span class="title function_">traversal</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> left, <span class="type">int</span> right)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的出口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//因为是递归处理每个数组的值，无法分割时结束递归</span></span><br><span class="line"><span class="keyword">if</span>(left &gt; right)<span class="keyword">return</span> <span class="literal">null</span>;<span class="comment">//递归出口</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的单层处理逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**单层处理逻辑 */</span></span><br><span class="line"><span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;<span class="comment">//取中间值</span></span><br><span class="line"><span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(nums[mid]);<span class="comment">//构建节点</span></span><br><span class="line">node.left = traversal(nums, left, mid - <span class="number">1</span>);<span class="comment">//递归构建左孩子</span></span><br><span class="line">node.right = traversal(nums, mid + <span class="number">1</span>, right);<span class="comment">//递归构建右孩子</span></span><br><span class="line"><span class="keyword">return</span> node;</span><br></pre></td></tr></table></figure>
+
+<p>递归法的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**递归法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">sortedArrayToBST</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">root</span> <span class="operator">=</span> traversal(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> TreeNode <span class="title function_">traversal</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> left, <span class="type">int</span> right)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(left &gt; right)<span class="keyword">return</span> <span class="literal">null</span>;<span class="comment">//递归出口</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**单层处理逻辑 */</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;<span class="comment">//取中间值</span></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(nums[mid]);<span class="comment">//构建节点</span></span><br><span class="line">        node.left = traversal(nums, left, mid - <span class="number">1</span>);<span class="comment">//递归构建左孩子</span></span><br><span class="line">        node.right = traversal(nums, mid + <span class="number">1</span>, right);<span class="comment">//递归构建右孩子</span></span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们进一步来梳理迭代法</p>
+<ul>
+<li>迭代的话主要不同的就是把递归构建节点分割数组转换为循环处理的时候用队列来存储遍历的节点、分割的数组左右小标🤔🤔🤔</li>
+</ul>
+<p>迭代法的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**迭代法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">sortedArrayToBST</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>)<span class="keyword">return</span> <span class="literal">null</span>;<span class="comment">//提前结束</span></span><br><span class="line"></span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">root</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>);<span class="comment">//初始化根节点</span></span><br><span class="line">        Queue&lt;TreeNode&gt; nodeQue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();<span class="comment">//存储遍历节点</span></span><br><span class="line">        Queue&lt;Integer&gt; leftQue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();<span class="comment">//存储左区间下标</span></span><br><span class="line">        Queue&lt;Integer&gt; rightQue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();<span class="comment">//存储右区间下标</span></span><br><span class="line">        nodeQue.offer(root);</span><br><span class="line">        leftQue.offer(<span class="number">0</span>);</span><br><span class="line">        rightQue.offer(nums.length - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">while</span>(!nodeQue.isEmpty())&#123;</span><br><span class="line">            <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> nodeQue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> leftQue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> rightQue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            cur.val = nums[mid];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(left &lt;= mid - <span class="number">1</span>)&#123;<span class="comment">//处理左孩子</span></span><br><span class="line">                cur.left = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>);</span><br><span class="line">                nodeQue.offer(cur.left);</span><br><span class="line">                leftQue.offer(left);</span><br><span class="line">                rightQue.offer(mid - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(right &gt;= mid + <span class="number">1</span>)&#123;<span class="comment">//处理右孩子</span></span><br><span class="line">                cur.right = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(<span class="number">0</span>);</span><br><span class="line">                nodeQue.offer(cur.right);</span><br><span class="line">                leftQue.offer(mid + <span class="number">1</span>);</span><br><span class="line">                rightQue.offer(right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="把二叉搜索树转换为累加树"><a href="#把二叉搜索树转换为累加树" class="headerlink" title="把二叉搜索树转换为累加树"></a>把二叉搜索树转换为累加树</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/convert-bst-to-greater-tree/description/">LeetCode题目链接</a></p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%88%E5%85%AB%EF%BC%89/1728609679671.png" alt="1728609679671"></p>
+<p>我们来思路梳理</p>
+<ul>
+<li>因为可以看出累加树是从右中左顺序累加，加上是二叉搜索树，我们可以用一个变量来记录遍历的前一个节点来不断累加值，遍历顺序从右到中再到左🤔🤔🤔</li>
+</ul>
+<p>我们来梳理递归三要素</p>
+<ul>
+<li>确定递归的参数值和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在已有二叉搜索树根节点root存在的情况下去修改其每个节点的值，这里递归的时候不需要返回节点什么的所以返回值为void</span></span><br><span class="line"><span class="comment">//参数的话就是要处理的二叉搜索树的根节点</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的出口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//因为是递归处理每个节点，所以处理到空节点递归结束</span></span><br><span class="line"><span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>确定递归的单层处理逻辑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">traversal(root.right);<span class="comment">//先处理右节点</span></span><br><span class="line">root.val += pre;<span class="comment">//累加值</span></span><br><span class="line">pre = root.val;<span class="comment">//更新前序节点值</span></span><br><span class="line">traversal(root.left);<span class="comment">//再处理左节点</span></span><br></pre></td></tr></table></figure>
+
+<p>递归完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**递归法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">convertBST</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        traversal(root);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root)</span>&#123;<span class="comment">//右中左遍历</span></span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span>;</span><br><span class="line">        traversal(root.right);</span><br><span class="line">        root.val += pre;</span><br><span class="line">        pre = root.val;</span><br><span class="line">        traversal(root.left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们来进一步梳理迭代法的思路</p>
+<ul>
+<li>迭代的话这里就是把递归遍历转为循环栈处理，栈要先把父节点和右节点压栈，再处理出栈节点，处理完在把左节点入栈</li>
+</ul>
+<p>迭代的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**迭代法 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">convertBST</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">null</span>)<span class="keyword">return</span> root;</span><br><span class="line">        traversal(root);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">traversal</span><span class="params">(TreeNode root)</span>&#123;<span class="comment">//右中左遍历</span></span><br><span class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;&gt;();</span><br><span class="line">        <span class="type">TreeNode</span> <span class="variable">cur</span> <span class="operator">=</span> root;</span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">null</span> || !stack.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(cur != <span class="literal">null</span>)&#123;</span><br><span class="line">                stack.push(cur);</span><br><span class="line">                cur = cur.right; <span class="comment">//压栈中右</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                cur = stack.pop();<span class="comment">//中</span></span><br><span class="line">                cur.val += pre;</span><br><span class="line">                pre = cur.val;</span><br><span class="line">                cur = cur.left; <span class="comment">//左</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>明天博主将开始回溯算法的第一轮学习，大家一起加油呀✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>

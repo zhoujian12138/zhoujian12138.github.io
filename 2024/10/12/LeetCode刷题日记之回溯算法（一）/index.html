@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        zj
+    </title>
+    <meta name="description" content= 嘿，我是zj～这是我的子站，用于展示个人的学习内容。欢迎访问！ >
+    <meta name="keywords" content= Blog,zhoujian >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            LeetCode刷题日记之回溯算法（一）
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 今天开始学习回溯算法啦，虽然直接递归学习的时候有涉及到回溯但是没有系统性的学习，希望博主记录的内容能够对大家有所帮助 ，一起加油吧朋友们！💪💪💪 </p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combinations/description/">LeetCode题目链接</a></p>
+<p>给定一个整数n和一个整数k，要求返回[1, n]中所有可能的k个数的组合</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/1728740308724.png" alt="1728740308724"></p>
+<p>首先的话需要知道组合的特点是顺序不重要，这启示我们可以用列表来存🤔🤔🤔</p>
+<p>我们来梳理逻辑</p>
+<ul>
+<li>回溯法的核心是用递归来构建每一个可能的组合，通过递归遍历所有可能的数并在选择时跳过已经选择过的数字🤔，所以我们可以定义一个结果列表result，一个组合列表path，一个数字索引startIndex，每层往下数字索引递增，选择数字加入path，当path的长度等于k则把组合加入结果集，递归完成后回溯path来存储其他组合😲</li>
+</ul>
+<p>我们来进一步梳理回溯三要素</p>
+<ul>
+<li>递归函数的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把结果集和组合定义为全局变量，避免太多参数导致递归处理不好理解</span></span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();<span class="comment">//存放符合条件结果的集合 List&lt;Integer&gt; path = new ArrayList&lt;&gt;();//存放符合条件的结果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//递归处理无返回值，递归完result已经填充完毕，n为数的最大值，k为组合大小，在递归处理中需要</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> startIndex)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯函数终止条件（这里要生成path副本来存入结果集中，如果存path的话只是一个引用，path回溯撤销时，result中的元素也将同时撤销🤔🤔🤔）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(path.size() == k)&#123; <span class="comment">//终止条件:组合长度等于k</span></span><br><span class="line">    result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//存放结果</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程(这里是包含未剪枝处理的搜索逻辑与剪枝的搜索逻辑，因为有些不必要的搜索可以剪掉🤔🤔🤔，剪掉这些搜索就称为剪枝，这里剪枝是因为要组合长度为k，然后如果数字索引到后面总的搜索次数都不够添加k个元素形成一个组合那就没有必要搜索了🤔🤔🤔)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= n; i++)&#123;<span class="comment">//选择本层集合中的元素</span></span><br><span class="line">    path.add(i);<span class="comment">//处理节点</span></span><br><span class="line">    backtracking(n, k, i + <span class="number">1</span>);<span class="comment">//递归</span></span><br><span class="line">    path.removeLast();<span class="comment">//回溯撤销处理的节点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= n - (k - path.size()) + <span class="number">1</span>; i++)&#123;<span class="comment">//选择本层集合中的元素</span></span><br><span class="line">    path.add(i);<span class="comment">//处理节点</span></span><br><span class="line">    backtracking(n, k, i + <span class="number">1</span>);<span class="comment">//递归</span></span><br><span class="line">    path.removeLast();<span class="comment">//回溯撤销处理的节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//未剪枝</span></span><br><span class="line"><span class="comment">// class Solution &#123;</span></span><br><span class="line"><span class="comment">//     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();//存放符合条件结果的集合</span></span><br><span class="line"><span class="comment">//     List&lt;Integer&gt; path = new ArrayList&lt;&gt;();//存放符合条件的结果</span></span><br><span class="line"><span class="comment">//     public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) &#123;</span></span><br><span class="line"><span class="comment">//         backtracking(n, k, 1);</span></span><br><span class="line"><span class="comment">//         return result;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//     private void backtracking(int n, int k, int startIndex)&#123;</span></span><br><span class="line"><span class="comment">//         if(path.size() == k)&#123; //终止条件</span></span><br><span class="line"><span class="comment">//             result.add(new ArrayList&lt;&gt;(path));//存放结果</span></span><br><span class="line"><span class="comment">//             return;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line">        <span class="comment">// for(int i = startIndex; i &lt;= n; i++)&#123;//选择本层集合中的元素</span></span><br><span class="line">        <span class="comment">//     path.add(i);//处理节点</span></span><br><span class="line">        <span class="comment">//     backtracking(n, k, i + 1);//递归</span></span><br><span class="line">        <span class="comment">//     path.removeLast();//回溯撤销处理的节点</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//剪枝</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();<span class="comment">//存放符合条件结果的集合</span></span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();<span class="comment">//存放符合条件的结果</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combine</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        backtracking(n, k, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> startIndex)</span>&#123; <span class="comment">//可剪枝处</span></span><br><span class="line">        <span class="keyword">if</span>(path.size() == k)&#123; <span class="comment">//终止条件</span></span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//存放结果</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">        如果for循环选择的起始位置之后的元素个数已经不足我们需要的元素个数那就没有必要搜索了</span></span><br><span class="line"><span class="comment">        已经选择的元素path.size()</span></span><br><span class="line"><span class="comment">        还需要选择的元素k - path.size()</span></span><br><span class="line"><span class="comment">        在集合中至多要从n - (k - path.size()) + 1开始遍历</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= n - (k - path.size()) + <span class="number">1</span>; i++)&#123;<span class="comment">//选择本层集合中的元素</span></span><br><span class="line">            path.add(i);<span class="comment">//处理节点</span></span><br><span class="line">            backtracking(n, k, i + <span class="number">1</span>);<span class="comment">//递归</span></span><br><span class="line">            path.removeLast();<span class="comment">//回溯撤销处理的节点</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组合总和III"><a href="#组合总和III" class="headerlink" title="组合总和III"></a>组合总和III</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-iii/description/">LeetCode题目链接</a></p>
+<p>就是也是找组合，找什么组合呢？从[1,9]区间里找一个长度为k的组合，使得这个组合的数总和为n，组合中每个数只能出现一次</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/1728741858450.png" alt="1728741858450"></p>
+<p>我们来梳理一下逻辑</p>
+<ul>
+<li>回溯搜索的话从区间1~9取数，向组合中添加数字，累计当前的总和。 在递归过程中，如果组合的长度达到了 <code>k</code> 且组合的和等于 <code>n</code>，则该组合为有效结果，加入到结果集中。如果组合长度超过 <code>k</code>，或者当前数字的和已经超过 <code>n</code>，则不需要继续递归，进行回溯。每次递归时尝试选择数字，之后在递归返回时将该数字移除（即回溯），以便尝试其他可能性🤔🤔🤔</li>
+</ul>
+<p>我们来进一步梳理回溯三要素</p>
+<ul>
+<li>递归函数的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义结果集和组合的全局变量，减少递归参数</span></span><br><span class="line">List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="comment">//回溯搜索所需的数字索引、目标和n、组合长度k</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> n, <span class="type">int</span> startIndex)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(path.size() == k)&#123;<span class="comment">//终止条件</span></span><br><span class="line">    <span class="keyword">if</span>(path.stream().mapToInt(Integer::intValue).sum() == n) result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));<span class="comment">//如果组合的和为目标和且组合长度为目标长度则把组合副本加入结果集</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程（这里大家选一种写即可，这里剪枝的话包含循环时把不够组合长度的搜索剪掉以及把组合的和大于目标和后的不必要递归也剪掉🤔🤔🤔）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//未剪枝的单层搜索过程</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= <span class="number">9</span>; i++)&#123; </span><br><span class="line">    path.add(i);</span><br><span class="line">    backtracking(k, n, i + <span class="number">1</span>);</span><br><span class="line">    path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//剪枝的单层搜索过程</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= <span class="number">9</span> - (k - path.size()) + <span class="number">1</span> ; i++)&#123;<span class="comment">//个数剪枝</span></span><br><span class="line">    path.add(i);</span><br><span class="line">    <span class="keyword">if</span>(path.stream().mapToInt(Integer::intValue).sum() &gt; n)&#123;<span class="comment">//求和剪枝</span></span><br><span class="line">        path.removeLast();<span class="comment">//先回溯</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    backtracking(k, n, i + <span class="number">1</span>);</span><br><span class="line">    path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的完整代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**不剪枝 */</span></span><br><span class="line"><span class="comment">// class Solution &#123;</span></span><br><span class="line"><span class="comment">//     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();</span></span><br><span class="line"><span class="comment">//     List&lt;Integer&gt; path = new ArrayList&lt;&gt;();</span></span><br><span class="line"><span class="comment">//     public List&lt;List&lt;Integer&gt;&gt; combinationSum3(int k, int n) &#123;</span></span><br><span class="line"><span class="comment">//         backtracking(k, n, 1);</span></span><br><span class="line"><span class="comment">//         return result;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     private void backtracking(int k, int n, int startIndex)&#123;</span></span><br><span class="line"><span class="comment">//         if(path.size() == k)&#123;//终止条件</span></span><br><span class="line"><span class="comment">//             if(path.stream().mapToInt(Integer::intValue).sum() == n) result.add(new ArrayList&lt;&gt;(path));</span></span><br><span class="line"><span class="comment">//             return;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line">        <span class="comment">// for(int i = startIndex; i &lt;= 9; i++)&#123; </span></span><br><span class="line">        <span class="comment">//     path.add(i);</span></span><br><span class="line">        <span class="comment">//     backtracking(k, n, i + 1);</span></span><br><span class="line">        <span class="comment">//     path.removeLast();//回溯</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**剪枝 */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum3</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">        backtracking(k, n, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> k, <span class="type">int</span> n, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(path.size() == k)&#123;<span class="comment">//终止条件</span></span><br><span class="line">            <span class="keyword">if</span>(path.stream().mapToInt(Integer::intValue).sum() == n) result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= <span class="number">9</span> - (k - path.size()) + <span class="number">1</span> ; i++)&#123;<span class="comment">//个数剪枝</span></span><br><span class="line">            path.add(i);</span><br><span class="line">            <span class="keyword">if</span>(path.stream().mapToInt(Integer::intValue).sum() &gt; n)&#123;<span class="comment">//求和剪枝</span></span><br><span class="line">                path.removeLast();<span class="comment">//先回溯</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            backtracking(k, n, i + <span class="number">1</span>);</span><br><span class="line">            path.removeLast();<span class="comment">//回溯</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="电话号码的字母组合"><a href="#电话号码的字母组合" class="headerlink" title="电话号码的字母组合"></a>电话号码的字母组合</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/">LeetCode题目链接</a></p>
+<p>这道题就是给一个字符串类似<code>&quot;23&quot;</code>，然后的话手机按键上不是像2或者3它会各自对应一组字符类似<code>&quot;abc&quot;</code>这种，然后就是把对应的字符的所有组合进行一个返回。</p>
+<p><img src="/../images/LeetCode%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/1728744424368.png" alt="1728744424368"></p>
+<p>我们来梳理思路</p>
+<ul>
+<li>先定义一个数字到字母的映射表（类似于电话键盘上的数字对应字母），然后使用回溯法从第一个数字开始，每次选择该数字对应的一个字母，递归进入下一个数字，继续选择字母。 当递归路径达到输入字符串的长度时，说明已经生成了一个完整的字母组合，将它加入结果集中。  在回溯过程中每次递归完成后回到上一步，尝试其他字母组合，直至所有组合都被遍历🤔🤔🤔</li>
+</ul>
+<p>我们进一步来梳理回溯三要素</p>
+<ul>
+<li>确定递归的参数和返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();<span class="comment">//会涉及大量的字符串拼接，所以这里选择更为高效的 StringBuilder</span></span><br><span class="line">String[] map = &#123;</span><br><span class="line">    <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">    <span class="string">&quot;def&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ghi&quot;</span>,</span><br><span class="line">    <span class="string">&quot;jkl&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mno&quot;</span>,</span><br><span class="line">    <span class="string">&quot;pqrs&quot;</span>,</span><br><span class="line">    <span class="string">&quot;tuv&quot;</span>,</span><br><span class="line">    <span class="string">&quot;wxyz&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String digits, <span class="type">int</span> index)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>回溯终止条件（数字索引等于给的数字字符串长度时把字母组合加入到结果集中🤔）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(index == digits.length())&#123; //出口</span><br><span class="line">    result.add(s.toString());</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单层搜索过程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> map[digits.charAt(index) - <span class="string">&#x27;0&#x27;</span>];<span class="comment">//先根据数字索引找对应的可用字母</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i++)&#123;<span class="comment">//递归进行字母组合</span></span><br><span class="line">    s.append(str.charAt(i));</span><br><span class="line">    backtracking(digits, index + <span class="number">1</span>);</span><br><span class="line">    s.deleteCharAt(s.length() - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完整的回溯代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;String&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();<span class="comment">//会涉及大量的字符串拼接，所以这里选择更为高效的 StringBuilder</span></span><br><span class="line">    String[] map = &#123;</span><br><span class="line">        <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;abc&quot;</span>,</span><br><span class="line">        <span class="string">&quot;def&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ghi&quot;</span>,</span><br><span class="line">        <span class="string">&quot;jkl&quot;</span>,</span><br><span class="line">        <span class="string">&quot;mno&quot;</span>,</span><br><span class="line">        <span class="string">&quot;pqrs&quot;</span>,</span><br><span class="line">        <span class="string">&quot;tuv&quot;</span>,</span><br><span class="line">        <span class="string">&quot;wxyz&quot;</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">letterCombinations</span><span class="params">(String digits)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(digits.length() == <span class="number">0</span>)<span class="keyword">return</span> result;</span><br><span class="line">        backtracking(digits, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(String digits, <span class="type">int</span> index)</span>&#123; <span class="comment">//index是用来遍历digits的</span></span><br><span class="line">        <span class="keyword">if</span>(index == digits.length())&#123; <span class="comment">//出口</span></span><br><span class="line">            result.add(s.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> map[digits.charAt(index) - <span class="string">&#x27;0&#x27;</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i++)&#123;</span><br><span class="line">            s.append(str.charAt(i));</span><br><span class="line">            backtracking(digits, index + <span class="number">1</span>);</span><br><span class="line">            s.deleteCharAt(s.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天的回溯学习就到这里啦，继续加油，奥利给✊✊✊</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>Copyright © 2020 | Author: 周建 | Theme By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">Page Views: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">Unique Visitors: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="">
+<input type="hidden" id="valine_appKey" value="">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
